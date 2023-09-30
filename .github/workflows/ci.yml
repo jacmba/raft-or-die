@@ -3,7 +3,7 @@ on: push
 
 env:
   GODOT_VERSION: 4.1.1
-  EXPORT_NAME: slime-squash
+  EXPORT_NAME: raft-or-die
   ITCH_IO_GAME: jacmba/raft-or-die
   BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
   
