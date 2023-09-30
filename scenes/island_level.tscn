@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://unuowidn88yp"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
+
+[node name="IslandLevel" type="Node3D"]
+script = ExtResource("1_n7ulm")
+
+[node name="Sea" type="CSGBox3D" parent="."]
+size = Vector3(29.3375, 0.12797, 20.0659)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.856258, 0.516548, 0, -0.516548, 0.856258, 0, 2.79824, 11.6609)
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 4, 0)
