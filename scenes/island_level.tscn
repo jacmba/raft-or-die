@@ -1,15 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=4 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
+[ext_resource type="PackedScene" uid="uid://dt718wv8odylo" path="res://models/island.glb" id="2_fhvii"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hdenp"]
+albedo_color = Color(0.262745, 0.658824, 0.607843, 1)
 
 [node name="IslandLevel" type="Node3D"]
 script = ExtResource("1_n7ulm")
 
 [node name="Sea" type="CSGBox3D" parent="."]
-size = Vector3(29.3375, 0.12797, 20.0659)
+size = Vector3(500, 0.128, 500)
+material = SubResource("StandardMaterial3D_hdenp")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.856258, 0.516548, 0, -0.516548, 0.856258, 0, 2.79824, 11.6609)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 4, 0)
+
+[node name="island" parent="." instance=ExtResource("2_fhvii")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.65859, 0)
