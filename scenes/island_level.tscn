@@ -1,23 +1,54 @@
-[gd_scene load_steps=4 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=7 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
-[ext_resource type="PackedScene" uid="uid://dt718wv8odylo" path="res://models/island.glb" id="2_fhvii"]
+[ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
+[ext_resource type="PackedScene" uid="uid://grhkgyq37mqw" path="res://scenes/island.tscn" id="2_r6x8h"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hdenp"]
-albedo_color = Color(0.262745, 0.658824, 0.607843, 1)
+[sub_resource type="Environment" id="Environment_2ilta"]
+background_mode = 1
+background_color = Color(0.41181, 0.866621, 0.847089, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fricg"]
+transparency = 1
+albedo_color = Color(0, 0.273, 0.42, 0.980392)
+metallic = 0.27
+metallic_specular = 0.43
+roughness = 0.08
+refraction_enabled = true
+refraction_scale = 0.21
+
+[sub_resource type="QuadMesh" id="QuadMesh_7dl66"]
+material = SubResource("StandardMaterial3D_fricg")
+size = Vector2(1000, 1000)
+orientation = 1
 
 [node name="IslandLevel" type="Node3D"]
 script = ExtResource("1_n7ulm")
 
-[node name="Sea" type="CSGBox3D" parent="."]
-size = Vector3(500, 0.128, 500)
-material = SubResource("StandardMaterial3D_hdenp")
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.856258, 0.516548, 0, -0.516548, 0.856258, 0, 2.79824, 11.6609)
+transform = Transform3D(1, 0, 0, 0, 0.856258, 0.516548, 0, -0.516548, 0.856258, 0, 9.79824, 25.6609)
+environment = SubResource("Environment_2ilta")
+far = 500.0
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 4, 0)
+[node name="Scenery" type="Node" parent="."]
 
-[node name="island" parent="." instance=ExtResource("2_fhvii")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.65859, 0)
+[node name="Trees" type="Node" parent="Scenery"]
+
+[node name="palmtree" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.653654, 2.2859, 4.11029)
+
+[node name="palmtree2" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91279, 1.30719, -1.34747)
+
+[node name="palmtree3" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.08721, 1.30719, -2.34747)
+
+[node name="island" parent="Scenery" instance=ExtResource("2_r6x8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
+
+[node name="Sea" type="MeshInstance3D" parent="Scenery"]
+mesh = SubResource("QuadMesh_7dl66")
+skeleton = NodePath("../..")
