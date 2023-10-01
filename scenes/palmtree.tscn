@@ -12,13 +12,15 @@ radius = 1.29935
 
 [node name="palmtree" instance=ExtResource("1_d06sx")]
 
-[node name="RigidBody3D" type="RigidBody3D" parent="." index="1"]
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38978, 0)
 shape = SubResource("CylinderShape3D_ihrak")
 
 [node name="Area3D" type="Area3D" parent="." index="2"]
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4561, 0)

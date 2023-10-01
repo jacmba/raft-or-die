@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=15 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
 [ext_resource type="PackedScene" uid="uid://grhkgyq37mqw" path="res://scenes/island.tscn" id="2_r6x8h"]
 [ext_resource type="Script" path="res://scripts/cam_chase.gd" id="2_vudvs"]
 [ext_resource type="PackedScene" uid="uid://4bd0qdgjxr7e" path="res://scenes/player.tscn" id="4_k7ppr"]
+[ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
@@ -32,18 +33,58 @@ material = SubResource("StandardMaterial3D_fricg")
 size = Vector2(1000, 1000)
 orientation = 1
 
+[sub_resource type="Animation" id="Animation_j8qr5"]
+resource_name = "Tide"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.2, 0), Vector3(0, 0, 0), Vector3(0, -0.2, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_prxhy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hmcga"]
+_data = {
+"RESET": SubResource("Animation_prxhy"),
+"Tide": SubResource("Animation_j8qr5")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eb1sx"]
+
 [node name="IslandLevel" type="Node3D"]
 script = ExtResource("1_n7ulm")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 9.40809, 19.0654)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 9, 15)
 environment = SubResource("Environment_2ilta")
 attributes = SubResource("CameraAttributesPractical_7rhv0")
 current = true
 fov = 60.0
 far = 200.0
 script = ExtResource("2_vudvs")
-target = NodePath("../player")
+target = NodePath("../Player")
 
 [node name="Scenery" type="Node" parent="."]
 
@@ -65,8 +106,123 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
 mesh = SubResource("QuadMesh_7dl66")
 skeleton = NodePath("../..")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Scenery/Sea"]
+autoplay = "Tide"
+libraries = {
+"": SubResource("AnimationLibrary_hmcga")
+}
+
+[node name="Sharks" type="Node3D" parent="Scenery/Sea"]
+
+[node name="Shark" parent="Scenery/Sea/Sharks" node_paths=PackedStringArray("nav_zone") instance=ExtResource("6_k3k6x")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -12.061, -0.5, 17.093)
+nav_zone = NodePath("../../Navigation/NavigationZone")
+
+[node name="Shark2" parent="Scenery/Sea/Sharks" node_paths=PackedStringArray("nav_zone") instance=ExtResource("6_k3k6x")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -29.6096, -0.5, -1.5395)
+nav_zone = NodePath("../../Navigation/NavigationZone2")
+
+[node name="Shark3" parent="Scenery/Sea/Sharks" node_paths=PackedStringArray("nav_zone") instance=ExtResource("6_k3k6x")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 19.2859, -0.5, -36.5314)
+nav_zone = NodePath("../../Navigation/NavigationZone3")
+
+[node name="Shark4" parent="Scenery/Sea/Sharks" node_paths=PackedStringArray("nav_zone") instance=ExtResource("6_k3k6x")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 26.6402, -0.5, -22.937)
+nav_zone = NodePath("../../Navigation/NavigationZone4")
+
+[node name="Shark5" parent="Scenery/Sea/Sharks" node_paths=PackedStringArray("nav_zone") instance=ExtResource("6_k3k6x")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 32.2117, -0.5, 5.47764)
+nav_zone = NodePath("../../Navigation/NavigationZone5")
+
+[node name="Navigation" type="Node3D" parent="Scenery/Sea"]
+
+[node name="NavigationZone" type="Node3D" parent="Scenery/Sea/Navigation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5944, 0, 17.4005)
+
+[node name="Waypoint1" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.4239, 0, -1.32847)
+
+[node name="Waypoint2" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6578, 0, 6.77638)
+
+[node name="Waypoint3" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3785, 0, 6.99476)
+
+[node name="Waypoint4" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96032, 0, -1.41942)
+
+[node name="NavigationZone2" type="Node3D" parent="Scenery/Sea/Navigation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.1816, 0, -2.21263)
+
+[node name="Waypoint1" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08821, 0, -5.97369)
+
+[node name="Waypoint2" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0512, 0, 4.35054)
+
+[node name="Waypoint3" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47328, 0, 6.99476)
+
+[node name="Waypoint4" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13649, 0, -5.9098)
+
+[node name="NavigationZone3" type="Node3D" parent="Scenery/Sea/Navigation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36266, 0, -18.8547)
+
+[node name="Waypoint1" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08821, 0, -5.97369)
+
+[node name="Waypoint2" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0512, 0, 5.68471)
+
+[node name="Waypoint3" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47328, 0, 8.11828)
+
+[node name="Waypoint4" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2989, 0, -5.13738)
+
+[node name="NavigationZone4" type="Node3D" parent="Scenery/Sea/Navigation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5976, 0, -6.59742)
+
+[node name="Waypoint1" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08821, 0, -5.97369)
+
+[node name="Waypoint2" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0512, 0, 5.68471)
+
+[node name="Waypoint3" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35324, 0, 8.11828)
+
+[node name="Waypoint4" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51601, 0, 1.21412)
+
+[node name="NavigationZone5" type="Node3D" parent="Scenery/Sea/Navigation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3662, 0, 13.3485)
+
+[node name="Waypoint1" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08821, 0, -5.97369)
+
+[node name="Waypoint2" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0512, 0, 5.68471)
+
+[node name="Waypoint3" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35324, 0, 8.11828)
+
+[node name="Waypoint4" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51601, 0, -2.2402)
+
+[node name="WaterArea" type="Area3D" parent="Scenery/Sea"]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Scenery/Sea/WaterArea"]
+transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, 0, -100, 0)
+shape = SubResource("BoxShape3D_eb1sx")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.5, 0.612373, 0.612373, 0.866025, -0.353553, -0.353553, 0, 0.707107, -0.707107, 0, 18, -1)
 
-[node name="player" parent="." instance=ExtResource("4_k7ppr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.13679, 2.45982, 4.80657)
+[node name="Player" parent="." instance=ExtResource("4_k7ppr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46, 5)
+
+[connection signal="body_entered" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_entered"]
+[connection signal="body_exited" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_exited"]

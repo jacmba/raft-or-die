@@ -11,6 +11,7 @@ data = PackedVector3Array(0.9355, 0, -0.9355, 1, 0, -1, 1, 0, -0.9355, 0.9355, 0
 gi_mode = 0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Plane" index="0"]
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Plane/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_o8kx8")

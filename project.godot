@@ -13,8 +13,10 @@ config_version=5
 config/name="Raft or die"
 run/main_scene="res://scenes/island_level.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
-boot_splash/show_image=false
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://images/splash.png"
+config/icon="res://images/icon.png"
+boot_splash/minimum_display_time=3000
 
 [editor]
 
@@ -58,6 +60,11 @@ move_backwards={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":12,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="Scenery"
+3d_physics/layer_2="Player"
 
 [rendering]
 

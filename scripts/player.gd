@@ -8,6 +8,8 @@ const rot_speed: float = 10
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
+var in_water: bool = false
+
 # Process logic on physics sync
 func _physics_process(delta):
 	var movement: Vector2 = Vector2.ZERO
@@ -48,3 +50,9 @@ func _physics_process(delta):
 	velocity.z = movement.y
 	
 	move_and_slide()
+	
+func _on_water_entered(_body):
+	in_water = true
+
+func _on_water_exited(_body):
+	in_water = false
