@@ -3,30 +3,34 @@ extends CharacterBody3D
 class_name Player
 
 const speed: float = 400
-const gravity: float = 300
-const rot_speed: float = 30
+const gravity: float = 100
+const rot_speed: float = 10
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
 # Process logic on physics sync
 func _physics_process(delta):
 	var movement: Vector2 = Vector2.ZERO
+	var turn: float = rotation.y
 	
 	# Check horizontal input
 	if Input.is_action_pressed("move_left"):
 		movement.x = -1
-		rotation.y = 270
+		turn = - PI / 2
 	elif Input.is_action_pressed("move_right"):
 		movement.x = 1
-		rotation.y = 90
+		turn = PI / 2
 	
 	# Check vertical input
 	if Input.is_action_pressed("move_forward"):
 		movement.y = -1
-		rotation.y = 180
+		turn = PI
 	elif Input.is_action_pressed("move_backwards"):
 		movement.y = 1
-		rotation.y = 0
+		turn = 0
+		
+	# Update rotation
+	rotation.y = lerp_angle(rotation.y, turn, rot_speed * delta)
 		
 	# Update animation
 	if movement.length() > 0:
