@@ -50,13 +50,13 @@ target = NodePath("../player")
 [node name="Trees" type="Node" parent="Scenery"]
 
 [node name="palmtree" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.653654, 2.2859, 4.11029)
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0.653654, 1.2859, 4.11029)
 
 [node name="palmtree2" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91279, 1.30719, -1.34747)
+transform = Transform3D(0.997118, -0.0758663, 0, 0.0758663, 0.997118, 0, 0, 0, 1, 5.91279, 1.30719, -1.34747)
 
 [node name="palmtree3" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.08721, 1.30719, -2.34747)
+transform = Transform3D(0.999136, 0.0415323, 0.00156502, -0.0415618, 0.998427, 0.0376228, 0, -0.0376553, 0.999291, -5.08721, 1.30719, -2.34747)
 
 [node name="island" parent="Scenery" instance=ExtResource("2_r6x8h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)

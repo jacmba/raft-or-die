@@ -6,6 +6,8 @@ const speed: float = 400
 const gravity: float = 300
 const rot_speed: float = 30
 
+@onready var anim: AnimationPlayer = $AnimationPlayer
+
 # Process logic on physics sync
 func _physics_process(delta):
 	var movement: Vector2 = Vector2.ZERO
@@ -25,6 +27,13 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("move_backwards"):
 		movement.y = 1
 		rotation.y = 0
+		
+	# Update animation
+	if movement.length() > 0:
+		if anim.current_animation != "Run":
+			anim.play("Run")
+	elif anim.current_animation != "Idle":
+		anim.play("Idle")
 	
 	# Process gravity
 	velocity.y -= gravity * delta
