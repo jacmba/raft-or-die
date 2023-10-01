@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=16 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/cam_chase.gd" id="2_vudvs"]
 [ext_resource type="PackedScene" uid="uid://4bd0qdgjxr7e" path="res://scenes/player.tscn" id="4_k7ppr"]
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
+[ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
@@ -21,7 +22,7 @@ adjustment_saturation = 5.54
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fricg"]
 transparency = 1
-albedo_color = Color(0, 0.273, 0.42, 0.980392)
+albedo_color = Color(0, 0.27451, 0.419608, 0.901961)
 metallic = 0.29
 metallic_specular = 0.88
 roughness = 0.08
@@ -223,6 +224,53 @@ transform = Transform3D(0.5, 0.612373, 0.612373, 0.866025, -0.353553, -0.353553,
 
 [node name="Player" parent="." instance=ExtResource("4_k7ppr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46, 5)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="ColorRect" parent="UI" groups=["health_listeners"]]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 248.0
+offset_bottom = 48.0
+script = ExtResource("7_vwmd8")
+
+[node name="Background" type="ColorRect" parent="UI/HealthBar"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 32.0
+color = Color(1, 0, 0, 1)
+
+[node name="Foreground" type="ColorRect" parent="UI/HealthBar"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 32.0
+color = Color(0.101961, 1, 0, 1)
+
+[node name="HungerBar" type="ColorRect" parent="UI" groups=["hunger_listeners"]]
+offset_left = 448.0
+offset_top = 8.0
+offset_right = 688.0
+offset_bottom = 48.0
+
+[node name="Background" type="ColorRect" parent="UI/HungerBar"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 32.0
+color = Color(1, 0, 0, 1)
+
+[node name="Foreground" type="ColorRect" parent="UI/HungerBar"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 32.0
+color = Color(0.101961, 1, 0, 1)
 
 [connection signal="body_entered" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_entered"]
 [connection signal="body_exited" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_exited"]

@@ -9,9 +9,19 @@ const rot_speed: float = 10
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
 var in_water: bool = false
+var dead: bool = false
+var health = 10
+var hunger = 10
 
 # Process logic on physics sync
 func _physics_process(delta):
+	# Process gravity
+	velocity.y -= gravity * delta
+	
+	# Do nothing when dead
+	if dead:
+		return
+	
 	var movement: Vector2 = Vector2.ZERO
 	var turn: float = rotation.y
 	
@@ -41,9 +51,6 @@ func _physics_process(delta):
 	elif anim.current_animation != "Idle":
 		anim.play("Idle")
 	
-	# Process gravity
-	velocity.y -= gravity * delta
-	
 	# Normalize movement
 	movement *= speed * delta
 	velocity.x = movement.x
@@ -56,3 +63,10 @@ func _on_water_entered(_body):
 
 func _on_water_exited(_body):
 	in_water = false
+	
+func take_bite():
+	health -= 1
+	get_tree().call_group("health_listeners", "_on_health_updated", health)
+	if health <= 0:
+		dead = true
+		anim.play("Die")
