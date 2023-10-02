@@ -26,4 +26,3 @@ func _on_coconut_collected(body):
 		$AnimationPlayer.play("collect")
 		await $AnimationPlayer.animation_finished
 		queue_free()
-	

@@ -134,9 +134,9 @@ func collect_wood():
 func _on_craft_area_entered(_body):
 	if not can_craft:
 		return
-	print("On craft area!")
+	get_tree().call_group("message_listeners", "_on_message_show", "Press action button to start crafting")
 	in_craft_area = true
 	
 func _on_craft_area_exit(_body):
-	print("Out of craft area!")
+	get_tree().call_group("message_listeners", "_on_message_hide")
 	in_craft_area = false

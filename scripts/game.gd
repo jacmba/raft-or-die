@@ -13,6 +13,7 @@ var dead: bool = false
 @onready var goal: Node3D = $Goal
 @onready var goal_label: Label = $UI/GoalLabel
 @onready var gameover_label: Label = $UI/GameoverLabel
+@onready var message_label: Label = $UI/MessageLabel
 
 func _ready():
 	craft_area.set_process(false)
@@ -34,6 +35,7 @@ func _on_wood_collected():
 		craft_area.set_process(true)
 		craft_area.visible = true
 		player.can_craft = true
+		_on_message_show("Wood collected. Find spot on the beach to craft a raft")
 		
 func _on_craft_started():
 	craft_area.visible = false
@@ -58,3 +60,11 @@ func _on_player_dead():
 	await get_tree().create_timer(2).timeout
 	dead = true
 	gameover_label.visible = true
+	
+func _on_message_show(message: String):
+	message_label.text = message
+	await get_tree().create_timer(3).timeout
+	_on_message_hide()
+	
+func _on_message_hide():
+	message_label.text = ""

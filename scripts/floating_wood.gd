@@ -12,6 +12,7 @@ func _on_player_close(body):
 	player = body as Player
 	connected = true
 	player.action_pressed.connect(_on_action_pressed)
+	get_tree().call_group("message_listeners", "_on_message_show", "Press action button to collect wood")
 	
 func _on_player_retired(body):
 	player = null
@@ -19,6 +20,7 @@ func _on_player_retired(body):
 		connected = false
 		var player: Player = body as Player
 		player.action_pressed.disconnect(_on_action_pressed)
+		get_tree().call_group("message_listeners", "_on_message_hide")
 	
 func _on_action_pressed():
 	if player != null:
