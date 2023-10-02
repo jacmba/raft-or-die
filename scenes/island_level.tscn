@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=19 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://4bd0qdgjxr7e" path="res://scenes/player.tscn" id="4_k7ppr"]
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
+[ext_resource type="Texture2D" uid="uid://dhv560j5meuie" path="res://images/heart.jpg" id="8_ihvr8"]
 [ext_resource type="Script" path="res://scripts/hunger_bar.gd" id="8_pf6nc"]
+[ext_resource type="Texture2D" uid="uid://b67ihrrllybj4" path="res://images/food.jpg" id="10_a2pyi"]
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
@@ -93,13 +95,13 @@ target = NodePath("../Player")
 [node name="Trees" type="Node" parent="Scenery"]
 
 [node name="palmtree" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.653654, 1.2859, 4.11029)
+transform = Transform3D(0.919135, 0.0309083, 0.392727, 0, 0.996917, -0.0784591, -0.393942, 0.0721145, 0.916302, 0.653654, 1.2859, 4.11029)
 
 [node name="palmtree2" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(0.997118, -0.0758663, 0, 0.0758663, 0.997118, 0, 0, 0, 1, 5.91279, 1.30719, -1.34747)
+transform = Transform3D(-0.429436, 0.17382, 0.886212, 0.0757745, 0.984777, -0.156434, -0.899913, -2.63825e-05, -0.43607, 5.91279, 1.30719, -1.34747)
 
 [node name="palmtree3" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(0.999136, 0.0415323, 0.00156502, -0.0415618, 0.998427, 0.0376228, 0, -0.0376553, 0.999291, -5.08721, 1.30719, -2.34747)
+transform = Transform3D(0.815519, 0.127709, 0.564463, -0.0413134, 0.985707, -0.163326, -0.577253, 0.109876, 0.809139, -5.08721, 1.30719, -2.34747)
 
 [node name="island" parent="Scenery" instance=ExtResource("2_r6x8h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
@@ -251,6 +253,21 @@ offset_right = 232.0
 offset_bottom = 32.0
 color = Color(0.101961, 1, 0, 1)
 
+[node name="IconFrame" type="ColorRect" parent="UI/HealthBar"]
+layout_mode = 0
+offset_left = 232.0
+offset_top = -8.0
+offset_right = 288.0
+offset_bottom = 48.0
+
+[node name="Icon" type="TextureRect" parent="UI/HealthBar"]
+layout_mode = 0
+offset_left = 240.0
+offset_right = 280.0
+offset_bottom = 40.0
+texture = ExtResource("8_ihvr8")
+expand_mode = 1
+
 [node name="HungerBar" type="ColorRect" parent="UI" groups=["hunger_listeners"]]
 offset_left = 448.0
 offset_top = 8.0
@@ -273,6 +290,21 @@ offset_top = 8.0
 offset_right = 232.0
 offset_bottom = 32.0
 color = Color(0.101961, 1, 0, 1)
+
+[node name="IconFrame" type="ColorRect" parent="UI/HungerBar"]
+layout_mode = 0
+offset_left = 232.0
+offset_top = -8.0
+offset_right = 288.0
+offset_bottom = 48.0
+
+[node name="Icon" type="TextureRect" parent="UI/HungerBar"]
+layout_mode = 0
+offset_left = 240.0
+offset_right = 280.0
+offset_bottom = 40.0
+texture = ExtResource("10_a2pyi")
+expand_mode = 1
 
 [connection signal="body_entered" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_entered"]
 [connection signal="body_exited" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_exited"]

@@ -92,3 +92,5 @@ func eat():
 		hunger = 10
 		get_tree().call_group("hunger_listeners", "_on_hunger_updated", hunger)
 		energy_multiplier = 10
+		hunger_timer.stop()
+		hunger_timer.start()

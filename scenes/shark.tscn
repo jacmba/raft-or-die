@@ -214,7 +214,7 @@ radius = 0.829617
 height = 5.92346
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qpfdh"]
-size = Vector3(32.6501, 2.92263, 20.8107)
+size = Vector3(15.1553, 2.92263, 12.7206)
 
 [node name="Shark" type="CharacterBody3D"]
 collision_mask = 3
@@ -264,7 +264,7 @@ shape = SubResource("CapsuleShape3D_kr3t8")
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Vision"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921548, 9.43767)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921548, 5.40431)
 shape = SubResource("BoxShape3D_qpfdh")
 
 [node name="AttackTimer" type="Timer" parent="."]

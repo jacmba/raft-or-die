@@ -11,6 +11,8 @@ func _ready():
 func _physics_process(delta):
 	if collected:
 		position.y += 10 * delta
+	elif global_position.y < -1:
+		queue_free()
 	
 func _on_coconut_fall():
 	gravity_scale = 1
