@@ -105,14 +105,14 @@ func _physics_process(delta):
 func _on_water_entered(_body):
 	in_water = true
 	surface_multiplier = 0.7
-	audio_player.stream = splash_sound
-	audio_player.play()
+	#audio_player.stream = splash_sound
+	#audio_player.play()
 
 func _on_water_exited(_body):
 	in_water = false
 	surface_multiplier = 1
-	audio_player.stream = splash_sound
-	audio_player.play()
+	#audio_player.stream = splash_sound
+	#audio_player.play()
 	
 func _on_hunger_increase():
 	if hunger > 0:
