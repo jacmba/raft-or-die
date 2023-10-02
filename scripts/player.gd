@@ -132,16 +132,16 @@ func take_bite():
 		anim.play("Die")
 		hunger_timer.stop()
 		await anim.animation_finished
-		audio_player.stream = death_sound
-		audio_player.play()
+		#audio_player.stream = death_sound
+		#audio_player.play()
 		player_dead.emit()
 		
 func eat():
 	if hunger < 10:
 		hunger = 10
 		get_tree().call_group("hunger_listeners", "_on_hunger_updated", hunger)
-		audio_player.stream = eat_sound
-		audio_player.play()
+		#audio_player.stream = eat_sound
+		#audio_player.play()
 		energy_multiplier = 10
 		hunger_timer.stop()
 		hunger_timer.start()
@@ -149,8 +149,8 @@ func eat():
 func collect_wood():
 	has_wood = true
 	wood_collected.emit()
-	audio_player.stream = wood_collect_sound
-	audio_player.play()
+	#audio_player.stream = wood_collect_sound
+	#audio_player.play()
 	
 func _on_craft_area_entered(_body):
 	if not can_craft:
