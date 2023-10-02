@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=17 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://4bd0qdgjxr7e" path="res://scenes/player.tscn" id="4_k7ppr"]
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
+[ext_resource type="Script" path="res://scripts/hunger_bar.gd" id="8_pf6nc"]
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
@@ -255,6 +256,7 @@ offset_left = 448.0
 offset_top = 8.0
 offset_right = 688.0
 offset_bottom = 48.0
+script = ExtResource("8_pf6nc")
 
 [node name="Background" type="ColorRect" parent="UI/HungerBar"]
 layout_mode = 0

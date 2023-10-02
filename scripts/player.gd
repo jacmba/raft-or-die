@@ -7,11 +7,14 @@ const gravity: float = 100
 const rot_speed: float = 10
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var hunger_timer: Timer = $HungerTimer
 
 var in_water: bool = false
 var dead: bool = false
 var health = 10
 var hunger = 10
+var surface_multiplier = 1
+var energy_multiplier = 1
 
 # Process logic on physics sync
 func _physics_process(delta):
@@ -52,21 +55,40 @@ func _physics_process(delta):
 		anim.play("Idle")
 	
 	# Normalize movement
-	movement *= speed * delta
-	velocity.x = movement.x
-	velocity.z = movement.y
+	movement *= speed * delta * surface_multiplier * energy_multiplier
+	velocity.x = clampf(movement.x, -6, 6)
+	velocity.z = clampf(movement.y, -6, 6)
 	
 	move_and_slide()
 	
 func _on_water_entered(_body):
 	in_water = true
+	surface_multiplier = 0.7
 
 func _on_water_exited(_body):
 	in_water = false
+	surface_multiplier = 1
+	
+func _on_hunger_increase():
+	if hunger > 0:
+		hunger -= 1
+		get_tree().call_group("hunger_listeners", "_on_hunger_updated", hunger)
+		energy_multiplier = hunger / 10.0
+		energy_multiplier = clampf(energy_multiplier, 0.1, 1.0)
+	else:
+		take_bite() # Just reuse method to decrease health
 	
 func take_bite():
-	health -= 1
-	get_tree().call_group("health_listeners", "_on_health_updated", health)
-	if health <= 0:
+	if health > 0:
+		health -= 1
+		get_tree().call_group("health_listeners", "_on_health_updated", health)
+	else:
 		dead = true
 		anim.play("Die")
+		hunger_timer.stop()
+		
+func eat():
+	if hunger < 10:
+		hunger = 10
+		get_tree().call_group("hunger_listeners", "_on_hunger_updated", hunger)
+		energy_multiplier = 10

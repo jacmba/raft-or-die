@@ -803,3 +803,9 @@ libraries = {
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.904882, 0)
 shape = SubResource("CapsuleShape3D_s3ffw")
+
+[node name="HungerTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="HungerTimer" to="." method="_on_hunger_increase"]
