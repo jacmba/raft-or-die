@@ -15,6 +15,11 @@ var freeze_message: bool = false
 @onready var goal_label: Label = $UI/GoalLabel
 @onready var gameover_label: Label = $UI/GameoverLabel
 @onready var message_label: Label = $UI/MessageLabel
+@onready var win_jingle: AudioStream = preload("res://sound/270402__littlerobotsoundfactory__jingle_win_00.wav")
+@onready var lose_jingle: AudioStream = preload("res://sound/270403__littlerobotsoundfactory__jingle_lose_00.wav")
+@onready var soundtrack: AudioStreamPlayer2D = $"Background sound/Soundtrack"
+@onready var chimes: AudioStreamPlayer2D = $"Background sound/Chimes"
+@onready var all_wood_sound: AudioStream = preload("res://sound/592346__axilirate__collect-crystal.wav")
 
 func _ready():
 	craft_area.set_process(false)
@@ -27,6 +32,8 @@ func _process(delta):
 			left = true
 			goal_label.visible = true
 			cam.stop_chasing()
+			soundtrack.stream = win_jingle
+			soundtrack.play()
 			await  get_tree().create_timer(5).timeout
 			raft.queue_free()
 	
@@ -38,6 +45,8 @@ func _on_wood_collected():
 		craft_area.visible = true
 		player.can_craft = true
 		message_label.text = "Wood collected.\nFind spot on the beach to craft a raft"
+		chimes.stream = all_wood_sound
+		chimes.play()
 		await get_tree().create_timer(5).timeout
 		message_label.text = ""
 		freeze_message = false
@@ -49,6 +58,7 @@ func _on_craft_done():
 	raft.visible = true
 	await get_tree().create_timer(3).timeout
 	if not player.dead:
+		soundtrack.stop()
 		cam.target = raft
 		player.queue_free()
 		finished_player.visible = true
@@ -66,6 +76,9 @@ func _on_player_dead():
 	await get_tree().create_timer(2).timeout
 	dead = true
 	gameover_label.visible = true
+	soundtrack.stop()
+	soundtrack.stream = win_jingle
+	soundtrack.play()
 	
 func _on_message_show(message: String):
 	message_label.text = message

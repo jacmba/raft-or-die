@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=32 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -13,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://b67ihrrllybj4" path="res://images/food.jpg" id="10_a2pyi"]
 [ext_resource type="PackedScene" uid="uid://q3ullx4ynedr" path="res://scenes/floating_wood.tscn" id="11_0gy3r"]
 [ext_resource type="PackedScene" uid="uid://civa027t1ujgd" path="res://models/wood.glb" id="12_3d0gg"]
+[ext_resource type="AudioStream" uid="uid://p0mmxyhr1k84" path="res://sound/raft-or-die-soundtrack.mp3" id="14_uusn6"]
+[ext_resource type="AudioStream" uid="uid://d0tiriy73lcpe" path="res://sound/536346__ambientsoundapp__seagulls.wav" id="15_lmf5x"]
+[ext_resource type="AudioStream" uid="uid://dj86vrf6tchnp" path="res://sound/125225__tomtenney__02_lanes_island_water_1_48_24.wav" id="16_fcuen"]
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
@@ -480,6 +483,24 @@ label_settings = SubResource("LabelSettings_lfvrm")
 
 [node name="Goal" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.308, 0, 0)
+
+[node name="Background sound" type="Node" parent="."]
+
+[node name="Soundtrack" type="AudioStreamPlayer2D" parent="Background sound"]
+stream = ExtResource("14_uusn6")
+autoplay = true
+
+[node name="Seagulls" type="AudioStreamPlayer2D" parent="Background sound"]
+stream = ExtResource("15_lmf5x")
+volume_db = 1.5
+autoplay = true
+
+[node name="Sea" type="AudioStreamPlayer2D" parent="Background sound"]
+stream = ExtResource("16_fcuen")
+volume_db = 1.5
+autoplay = true
+
+[node name="Chimes" type="AudioStreamPlayer2D" parent="Background sound"]
 
 [connection signal="body_entered" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_entered"]
 [connection signal="body_exited" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_exit"]

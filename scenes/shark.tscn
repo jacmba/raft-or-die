@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://clvwqfjgw7t18"]
+[gd_scene load_steps=14 format=3 uid="uid://clvwqfjgw7t18"]
 
 [ext_resource type="Script" path="res://scripts/shark.gd" id="1_8atcp"]
 [ext_resource type="Texture2D" uid="uid://de3ccifu2ndvu" path="res://models/shark_shark.png" id="1_a5pt3"]
+[ext_resource type="AudioStream" uid="uid://brx40oeu4c3u3" path="res://sound/467701__lucasduff__monster-bite.wav" id="3_aaele"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iaxvi"]
 resource_name = "Material"
@@ -121,6 +122,21 @@ tracks/4/path = NodePath("Armature/Skeleton3D:Head")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = PackedFloat32Array(0, 1, 1, -1.11022e-16, -1.11022e-16, -1.09278e-08, 0.0333333, 1, 1, -1.11022e-16, -1.11022e-16, -1.09278e-08, 0.0666667, 1, 0.998737, -1.05303e-16, -1.16461e-16, 0.0502497, 0.1, 1, 0.987358, -9.20208e-17, -1.27217e-16, 0.158508, 0.166667, 1, 0.895537, -5.0021e-17, -1.48828e-16, 0.444987, 0.2, 1, 0.858334, -3.83297e-17, -5.81209e-17, 0.513091, 0.233333, 1, 0.850153, -3.59287e-17, -3.10176e-17, 0.526536, 0.266667, 1, 0.865867, -4.05891e-17, -2.23917e-17, 0.500274, 0.3, 1, 0.898871, -5.11434e-17, -9.24996e-18, 0.438213, 0.333333, 1, 0.942302, -6.74503e-17, 8.87434e-18, 0.334764, 0.366667, 1, 0.985314, -9.04345e-17, 3.35317e-17, 0.170753, 0.4, 1, 0.999632, -1.13994e-16, 6.00036e-17, -0.0271378, 0.433333, 1, -0.972983, 1.33655e-16, -8.4153e-17, 0.230878, 0.466667, 1, -0.910787, 1.46956e-16, -1.02989e-16, 0.412877, 0.5, 1, -0.833006, 1.53907e-16, -1.15398e-16, 0.553263, 0.533333, 1, -0.768264, 1.56364e-16, -1.21821e-16, 0.640133, 0.566667, 1, -0.719226, 1.56986e-16, -1.2526e-16, 0.694776, 0.6, 1, -0.690026, 1.8652e-16, -3.35322e-17, 0.723785, 0.633333, 1, -0.690609, 2.31315e-16, 1.09144e-16, 0.723229, 0.666667, 1, -0.736024, 2.32887e-16, 1.21852e-16, 0.676956, 0.7, 1, -0.838178, 2.32429e-16, 1.52056e-16, 0.545397, 0.733333, 1, -0.928405, 2.23647e-16, 1.82131e-16, 0.37157, 0.766667, 1, -0.980598, 2.07667e-16, 2.03948e-16, 0.196028, 0.8, 1, -0.998119, 1.76934e-16, 1.93969e-16, 0.0613115, 0.833333, 1, 1, -1.11022e-16, -1.11022e-16, -1.09278e-08)
+tracks/5/type = "audio"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AudioStreamPlayer3D")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_aaele")
+}],
+"times": PackedFloat32Array(0.4)
+}
+tracks/5/use_blend = true
 
 [sub_resource type="Animation" id="Animation_0m6ka"]
 resource_name = "Idle"
@@ -269,6 +285,9 @@ shape = SubResource("BoxShape3D_qpfdh")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = 1.5
 
 [connection signal="body_entered" from="Vision" to="." method="_on_player_detected"]
 [connection signal="body_exited" from="Vision" to="." method="_on_player_lost"]

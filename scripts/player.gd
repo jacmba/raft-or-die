@@ -14,6 +14,12 @@ const rot_speed: float = 10
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var hunger_timer: Timer = $HungerTimer
+@onready var audio_player: AudioStreamPlayer3D
+
+@onready var splash_sound: AudioStream = preload("res://110393__soundscalpelcom__water_splash.wav")
+@onready var eat_sound: AudioStream = preload("res://sound/412068__inspectorj__chewing-carrot-a.wav")
+@onready var death_sound: AudioStream = preload("res://sound/253478__thatguywiththebeard__death-i.wav")
+@onready var wood_collect_sound: AudioStream = preload("res://sound/348112__matrixxx__crunch.wav")
 
 var in_water: bool = false
 var in_craft_area: bool = false
@@ -48,8 +54,13 @@ func _process(_delta):
 
 # Process logic on physics sync
 func _physics_process(delta):
-	# Process gravity
-	velocity.y -= gravity * delta
+	# Process gravity (float on water)
+	if not in_water or position.y > -1.0 :
+		velocity.y -= gravity * delta
+		motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+	else:
+		velocity.y = 0
+		motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
 	
 	# Do nothing when dead
 	if dead or crafting:
@@ -94,10 +105,14 @@ func _physics_process(delta):
 func _on_water_entered(_body):
 	in_water = true
 	surface_multiplier = 0.7
+	audio_player.stream = splash_sound
+	audio_player.play()
 
 func _on_water_exited(_body):
 	in_water = false
 	surface_multiplier = 1
+	audio_player.stream = splash_sound
+	audio_player.play()
 	
 func _on_hunger_increase():
 	if hunger > 0:
@@ -117,12 +132,16 @@ func take_bite():
 		anim.play("Die")
 		hunger_timer.stop()
 		await anim.animation_finished
+		audio_player.stream = death_sound
+		audio_player.play()
 		player_dead.emit()
 		
 func eat():
 	if hunger < 10:
 		hunger = 10
 		get_tree().call_group("hunger_listeners", "_on_hunger_updated", hunger)
+		audio_player.stream = eat_sound
+		audio_player.play()
 		energy_multiplier = 10
 		hunger_timer.stop()
 		hunger_timer.start()
@@ -130,6 +149,8 @@ func eat():
 func collect_wood():
 	has_wood = true
 	wood_collected.emit()
+	audio_player.stream = wood_collect_sound
+	audio_player.play()
 	
 func _on_craft_area_entered(_body):
 	if not can_craft:

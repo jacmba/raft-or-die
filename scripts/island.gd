@@ -11,4 +11,5 @@ func _physics_process(delta):
 
 func _on_sink():
 	$AnimationPlayer.play("quake")
+	$QuakeAudio.play()
 	target_height -= sink_rate

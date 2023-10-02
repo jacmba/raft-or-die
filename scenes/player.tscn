@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://4bd0qdgjxr7e"]
+[gd_scene load_steps=15 format=3 uid="uid://4bd0qdgjxr7e"]
 
 [ext_resource type="Texture2D" uid="uid://cipk85tdl56ct" path="res://models/player_player.png" id="1_66c8y"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_h7blm"]
+[ext_resource type="AudioStream" uid="uid://btb5x7nlaejgl" path="res://sound/443629__checholio__28-clavando-estaca.wav" id="3_h2gno"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cx2gj"]
 resource_name = "Material"
@@ -172,6 +173,21 @@ tracks/13/path = NodePath("Armature/Skeleton3D:Leg.R")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = PackedFloat32Array(0, 1, -0.512844, -0.050622, 0.0841844, 0.852843)
+tracks/14/type = "audio"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AudioStreamPlayer3D")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_h2gno")
+}],
+"times": PackedFloat32Array(0.8)
+}
+tracks/14/use_blend = true
 
 [sub_resource type="Animation" id="Animation_1b0np"]
 resource_name = "Crouch"
@@ -808,5 +824,10 @@ shape = SubResource("CapsuleShape3D_s3ffw")
 [node name="HungerTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+current = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
 [connection signal="timeout" from="HungerTimer" to="." method="_on_hunger_increase"]
