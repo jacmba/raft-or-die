@@ -131,22 +131,11 @@ target = NodePath("../Player")
 
 [node name="Scenery" type="Node" parent="."]
 
-[node name="Trees" type="Node" parent="Scenery"]
-
-[node name="palmtree" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(0.919135, 0.0309083, 0.392727, 0, 0.996917, -0.0784591, -0.393942, 0.0721145, 0.916302, 0.653654, 1.2859, 4.11029)
-
-[node name="palmtree2" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(-0.429436, 0.17382, 0.886212, 0.0757745, 0.984777, -0.156434, -0.899913, -2.63825e-05, -0.43607, 5.91279, 1.30719, -1.34747)
-
-[node name="palmtree3" parent="Scenery/Trees" instance=ExtResource("2_kabme")]
-transform = Transform3D(0.815519, 0.127709, 0.564463, -0.0413134, 0.985707, -0.163326, -0.577253, 0.109876, 0.809139, -5.08721, 1.30719, -2.34747)
-
 [node name="Island" parent="Scenery" instance=ExtResource("2_r6x8h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
 
 [node name="CraftArea" type="MeshInstance3D" parent="Scenery/Island"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 7, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 7, 2)
 visible = false
 mesh = SubResource("CylinderMesh_mur8v")
 
@@ -157,12 +146,24 @@ collision_mask = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("CylinderShape3D_ed1r5")
 
+[node name="Trees" type="Node3D" parent="Scenery/Island"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.38884, 0)
+
+[node name="palmtree" parent="Scenery/Island/Trees" instance=ExtResource("2_kabme")]
+transform = Transform3D(0.919135, 0.0309083, 0.392727, 0, 0.996917, -0.0784591, -0.393942, 0.0721145, 0.916302, 0.653654, 1.2859, 4.11029)
+
+[node name="palmtree2" parent="Scenery/Island/Trees" instance=ExtResource("2_kabme")]
+transform = Transform3D(-0.429436, 0.17382, 0.886212, 0.0757745, 0.984777, -0.156434, -0.899913, -2.63825e-05, -0.43607, 5.91279, 1.30719, -1.34747)
+
+[node name="palmtree3" parent="Scenery/Island/Trees" instance=ExtResource("2_kabme")]
+transform = Transform3D(0.815519, 0.127709, 0.564463, -0.0413134, 0.985707, -0.163326, -0.577253, 0.109876, 0.809139, -5.08721, 1.30719, -2.34747)
+
 [node name="Sea" type="MeshInstance3D" parent="Scenery"]
 mesh = SubResource("QuadMesh_7dl66")
 skeleton = NodePath("../..")
 
 [node name="Raft" type="Node3D" parent="Scenery/Sea"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.4195, 0, 1.67618)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.4195, 0, 3.67618)
 visible = false
 
 [node name="player" parent="Scenery/Sea/Raft" instance=ExtResource("5_oclfm")]
@@ -268,7 +269,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08821, 0, -5.97369)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0512, 0, 5.68471)
 
 [node name="Waypoint3" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35324, 0, 8.11828)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35324, 0, 6.11828)
 
 [node name="Waypoint4" type="Node3D" parent="Scenery/Sea/Navigation/NavigationZone4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51601, 0, 1.21412)

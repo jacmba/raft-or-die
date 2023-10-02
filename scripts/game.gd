@@ -4,6 +4,7 @@ var wood: int = 0
 var leaving: bool = false
 var left: bool = false
 var dead: bool = false
+var freeze_message: bool = false
 
 @onready var craft_area: Node3D = $Scenery/Island/CraftArea
 @onready var raft: Node3D = $Scenery/Sea/Raft
@@ -32,10 +33,14 @@ func _process(delta):
 func _on_wood_collected():
 	wood += 1
 	if wood == 5:
+		freeze_message = true
 		craft_area.set_process(true)
 		craft_area.visible = true
 		player.can_craft = true
-		_on_message_show("Wood collected. Find spot on the beach to craft a raft")
+		message_label.text = "Wood collected.\nFind spot on the beach to craft a raft"
+		await get_tree().create_timer(5).timeout
+		message_label.text = ""
+		freeze_message = false
 		
 func _on_craft_started():
 	craft_area.visible = false
@@ -43,11 +48,12 @@ func _on_craft_started():
 func _on_craft_done():
 	raft.visible = true
 	await get_tree().create_timer(3).timeout
-	cam.target = raft
-	player.queue_free()
-	finished_player.visible = true
-	await get_tree().create_timer(1).timeout
-	leaving = true
+	if not player.dead:
+		cam.target = raft
+		player.queue_free()
+		finished_player.visible = true
+		await get_tree().create_timer(1).timeout
+		leaving = true
 	
 func _input(event):
 	if (left or dead) and event is InputEventKey and event.is_pressed():
@@ -67,4 +73,5 @@ func _on_message_show(message: String):
 	_on_message_hide()
 	
 func _on_message_hide():
-	message_label.text = ""
+	if not freeze_message:
+		message_label.text = ""
