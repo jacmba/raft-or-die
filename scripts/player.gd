@@ -2,6 +2,11 @@ extends CharacterBody3D
 
 class_name Player
 
+signal action_pressed
+signal wood_collected
+signal craft_started
+signal craft_done
+
 const speed: float = 400
 const gravity: float = 100
 const rot_speed: float = 10
@@ -10,11 +15,35 @@ const rot_speed: float = 10
 @onready var hunger_timer: Timer = $HungerTimer
 
 var in_water: bool = false
+var in_craft_area: bool = false
 var dead: bool = false
+var crafting: bool = false
+var has_wood: bool = false
+var can_craft: bool = false
 var health = 10
 var hunger = 10
 var surface_multiplier = 1
 var energy_multiplier = 1
+
+# Process by frame
+func _process(_delta):
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
+		
+	if dead:
+		return
+		
+	if Input.is_action_just_pressed("perform_action"):
+		if in_craft_area:
+			crafting = true
+			anim.play("Craft")
+			craft_started.emit()
+			hunger_timer.stop()
+			await get_tree().create_timer(5).timeout
+			anim.play("Idle")
+			craft_done.emit()
+		else:
+			action_pressed.emit()
 
 # Process logic on physics sync
 func _physics_process(delta):
@@ -22,7 +51,7 @@ func _physics_process(delta):
 	velocity.y -= gravity * delta
 	
 	# Do nothing when dead
-	if dead:
+	if dead or crafting:
 		return
 	
 	var movement: Vector2 = Vector2.ZERO
@@ -94,3 +123,17 @@ func eat():
 		energy_multiplier = 10
 		hunger_timer.stop()
 		hunger_timer.start()
+		
+func collect_wood():
+	has_wood = true
+	wood_collected.emit()
+	
+func _on_craft_area_entered(_body):
+	if not can_craft:
+		return
+	print("On craft area!")
+	in_craft_area = true
+	
+func _on_craft_area_exit(_body):
+	print("Out of craft area!")
+	in_craft_area = false

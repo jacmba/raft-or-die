@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct8e41tgw2u2o"]
+
+[ext_resource type="PackedScene" uid="uid://ccra8sm3qiwiq" path="res://models/player.glb" id="1_bso0h"]
+
+[node name="player" instance=ExtResource("1_bso0h")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(0.0595254, 0, 0, 0.998227)
+bones/3/rotation = Quaternion(-0.078529, 0, 0, 0.996912)
+bones/4/position = Vector3(0.155706, 0.289982, -0.00406452)
+bones/4/rotation = Quaternion(0.00785857, -0.00667728, 0.941458, -0.336973)
+bones/5/rotation = Quaternion(0.00103338, -0.000198741, -0.18145, 0.983399)
+bones/6/position = Vector3(-0.196989, 0.289982, -0.00406453)
+bones/6/rotation = Quaternion(-0.00785916, -0.00667816, 0.941457, 0.336976)
+bones/7/rotation = Quaternion(0.00103373, 0.000199437, 0.181451, 0.983399)
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "Idle"
