@@ -26,6 +26,7 @@ func _physics_process(delta):
 	var direction: Vector3 = Vector3.ZERO
 	var advance: float = 0
 	var target_pos: Vector3 = Vector3.ZERO
+	var dist: float = 0
 	
 	if player == null or player.dead:
 		status = Status.PATROL
@@ -33,7 +34,7 @@ func _physics_process(delta):
 	match status:
 		Status.PATROL:
 			target_pos = waypoints[wp].global_position
-			var dist = global_position.distance_to(target_pos)
+			dist = global_position.distance_to(target_pos)
 			if dist < 1:
 				wp += 1
 			if wp >= len(waypoints):
@@ -44,7 +45,7 @@ func _physics_process(delta):
 			
 		Status.CHASE:
 			target_pos = player.position
-			var dist = global_position.distance_to(target_pos)
+			dist = global_position.distance_to(target_pos)
 			advance = chase_speed * delta
 			if not player.in_water or player.dead:
 				status = Status.PATROL
@@ -55,7 +56,7 @@ func _physics_process(delta):
 				
 		Status.ATTACK:
 			target_pos = player.position
-			var dist = global_position.distance_to(target_pos)
+			dist = global_position.distance_to(target_pos)
 			if dist > 2 or player.dead:
 				if player.dead:
 					status = Status.PATROL
@@ -64,9 +65,10 @@ func _physics_process(delta):
 				bite_timer.stop()
 				anim.play("Swim")
 	
-	var old_rot = rotation
-	look_at(transform.origin - velocity, Vector3.UP)
-	rotation = lerp(old_rot, rotation, delta * rot_speed)
+	if not global_transform.origin.is_equal_approx(global_transform.origin - velocity):
+		var old_rot = rotation
+		look_at(global_transform.origin - velocity, Vector3.UP)
+		rotation = lerp(old_rot, rotation, delta * rot_speed)
 	direction = global_position.direction_to(target_pos)
 	
 	velocity = direction * advance

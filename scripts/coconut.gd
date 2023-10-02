@@ -18,9 +18,9 @@ func _on_coconut_fall():
 	gravity_scale = 1
 	
 func _on_coconut_collected(body):
-	if not collected:
+	var player: Player = body as Player
+	if not collected and not player.dead:
 		collected = true
-		var player: Player = body as Player
 		player.eat()
 		gravity_scale = 0
 		$AnimationPlayer.play("collect")

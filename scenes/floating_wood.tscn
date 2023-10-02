@@ -44,7 +44,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_4xenm")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k2pvl"]
-size = Vector3(1.9507, 0.770013, 3.93807)
+size = Vector3(1.9507, 2, 3.93807)
 
 [node name="FloatingWood" type="Node3D"]
 script = ExtResource("2_65xgl")

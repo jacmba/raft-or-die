@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=28 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -95,6 +95,21 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eb1sx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w7ykk"]
+font_size = 120
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6m5m0"]
+font_size = 48
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ob68h"]
+font_size = 120
+font_color = Color(1, 0, 0, 1)
+outline_size = 20
 
 [node name="IslandLevel" type="Node3D"]
 script = ExtResource("1_n7ulm")
@@ -287,7 +302,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -16)
 
 [node name="FloatingWood4" parent="Scenery/Sea/FloatingWoods" instance=ExtResource("11_0gy3r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.1218, 0, -6.2111)
 
 [node name="FloatingWood5" parent="Scenery/Sea/FloatingWoods" instance=ExtResource("11_0gy3r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 11)
@@ -376,10 +391,80 @@ offset_bottom = 40.0
 texture = ExtResource("10_a2pyi")
 expand_mode = 1
 
+[node name="GoalLabel" type="Label" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "CONGRATS!"
+label_settings = SubResource("LabelSettings_w7ykk")
+
+[node name="InstructionsLabel" type="Label" parent="UI/GoalLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0756677
+anchor_top = 0.97619
+anchor_right = 0.924332
+anchor_bottom = 1.2381
+offset_left = -144.0
+offset_top = -26.0
+offset_right = 144.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press any key to restart or ESC to exit"
+label_settings = SubResource("LabelSettings_6m5m0")
+metadata/_edit_use_anchors_ = true
+
+[node name="GameoverLabel" type="Label" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_ob68h")
+
+[node name="InstructionsLabel" type="Label" parent="UI/GameoverLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0756677
+anchor_top = 0.97619
+anchor_right = 0.924332
+anchor_bottom = 1.2381
+offset_left = -144.0
+offset_top = -26.0
+offset_right = 144.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press any key to restart or ESC to exit"
+label_settings = SubResource("LabelSettings_6m5m0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Goal" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.308, 0, 0)
+
 [connection signal="body_entered" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_entered"]
 [connection signal="body_exited" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_exit"]
 [connection signal="body_entered" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_entered"]
 [connection signal="body_exited" from="Scenery/Sea/WaterArea" to="Player" method="_on_water_exited"]
 [connection signal="craft_done" from="Player" to="." method="_on_craft_done"]
 [connection signal="craft_started" from="Player" to="." method="_on_craft_started"]
+[connection signal="player_dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="wood_collected" from="Player" to="." method="_on_wood_collected"]

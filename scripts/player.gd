@@ -6,6 +6,7 @@ signal action_pressed
 signal wood_collected
 signal craft_started
 signal craft_done
+signal player_dead
 
 const speed: float = 400
 const gravity: float = 100
@@ -115,6 +116,8 @@ func take_bite():
 		dead = true
 		anim.play("Die")
 		hunger_timer.stop()
+		await anim.animation_finished
+		player_dead.emit()
 		
 func eat():
 	if hunger < 10:
