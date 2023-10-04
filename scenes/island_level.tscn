@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=33 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
 [ext_resource type="PackedScene" uid="uid://grhkgyq37mqw" path="res://scenes/island.tscn" id="2_r6x8h"]
 [ext_resource type="Script" path="res://scripts/cam_chase.gd" id="2_vudvs"]
 [ext_resource type="PackedScene" uid="uid://4bd0qdgjxr7e" path="res://scenes/player.tscn" id="4_k7ppr"]
+[ext_resource type="Shader" uid="uid://6dlb6capx0fs" path="res://shaders/water_shader.tres" id="5_h5gxf"]
 [ext_resource type="PackedScene" uid="uid://ct8e41tgw2u2o" path="res://scenes/finished_player.tscn" id="5_oclfm"]
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
@@ -19,7 +20,7 @@
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
-background_color = Color(0.41181, 0.866621, 0.847089, 1)
+background_color = Color(0.184314, 0.537255, 0.741176, 1)
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
@@ -45,17 +46,12 @@ height = 10.0
 height = 6.0
 radius = 2.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fricg"]
-transparency = 1
-albedo_color = Color(0, 0.27451, 0.419608, 0.901961)
-metallic = 0.29
-metallic_specular = 0.88
-roughness = 0.08
-refraction_enabled = true
-refraction_scale = 0.21
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pk46v"]
+render_priority = 0
+shader = ExtResource("5_h5gxf")
 
 [sub_resource type="QuadMesh" id="QuadMesh_7dl66"]
-material = SubResource("StandardMaterial3D_fricg")
+material = SubResource("ShaderMaterial_pk46v")
 size = Vector2(1000, 1000)
 orientation = 1
 
