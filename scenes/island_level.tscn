@@ -21,7 +21,7 @@
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
 background_color = Color(0.184314, 0.537255, 0.741176, 1)
-ambient_light_source = 2
+ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 adjustment_brightness = 0.01

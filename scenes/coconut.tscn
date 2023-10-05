@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8oh7tuiic51t"]
+[gd_scene load_steps=13 format=3 uid="uid://b8oh7tuiic51t"]
 
 [ext_resource type="Texture2D" uid="uid://lk45reb0byf7" path="res://models/coconut_Coconut.png" id="1_6w850"]
 [ext_resource type="Script" path="res://scripts/coconut.gd" id="1_pjnov"]
@@ -42,6 +42,25 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_r1ycl")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dniiw"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jsqya"]
+next_pass = SubResource("StandardMaterial3D_dniiw")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("1_6w850")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_548rc"]
 radius = 0.198348
@@ -95,6 +114,7 @@ script = ExtResource("1_pjnov")
 [node name="Sphere" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_xfg6f")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_jsqya")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_548rc")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://q3ullx4ynedr"]
+[gd_scene load_steps=9 format=3 uid="uid://q3ullx4ynedr"]
 
 [ext_resource type="Script" path="res://scripts/floating_wood.gd" id="2_65xgl"]
 [ext_resource type="Texture2D" uid="uid://b1lmavd5s30ht" path="res://models/wood_Wood.png" id="2_fywvt"]
@@ -43,6 +43,25 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_4xenm")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rbrj"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t7cjn"]
+next_pass = SubResource("StandardMaterial3D_0rbrj")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("2_fywvt")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_k2pvl"]
 size = Vector3(1.9507, 2, 3.93807)
 
@@ -52,6 +71,7 @@ script = ExtResource("2_65xgl")
 [node name="Cube" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_d6m2o")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_t7cjn")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_mask = 2

@@ -51,7 +51,7 @@ operator = 2
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g8jyc"]
 noise_type = 2
 seed = 85
-frequency = 0.2471
+frequency = 0.7228
 fractal_type = 0
 cellular_distance_function = 1
 cellular_jitter = 1.0
@@ -78,7 +78,7 @@ input_name = "time"
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_sh2t7"]
 noise_type = 2
 seed = 35
-frequency = 0.1184
+frequency = 0.7619
 fractal_type = 0
 cellular_distance_function = 1
 cellular_jitter = 1.0
@@ -211,7 +211,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-141.537, -338.789)
+graph_offset = Vector2(-367.071, -9.39972)
 nodes/vertex/0/position = Vector2(1300, 40)
 nodes/fragment/0/position = Vector2(1380, 60)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorConstant_5pysb")
