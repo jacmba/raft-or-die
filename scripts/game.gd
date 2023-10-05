@@ -44,7 +44,7 @@ func _on_wood_collected():
 		craft_area.set_process(true)
 		craft_area.visible = true
 		player.can_craft = true
-		message_label.text = "Wood collected.\nFind spot on the beach to craft a raft"
+		message_label.text = "All wood collected.\nFind the crafting are and build a raft"
 		chimes.stream = all_wood_sound
 		chimes.play()
 		await get_tree().create_timer(5).timeout

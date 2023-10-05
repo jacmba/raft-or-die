@@ -9,11 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://ct8e41tgw2u2o" path="res://scenes/finished_player.tscn" id="5_oclfm"]
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
-[ext_resource type="Texture2D" uid="uid://dhv560j5meuie" path="res://images/heart.jpg" id="8_ihvr8"]
 [ext_resource type="Script" path="res://scripts/hunger_bar.gd" id="8_pf6nc"]
-[ext_resource type="Texture2D" uid="uid://b67ihrrllybj4" path="res://images/food.jpg" id="10_a2pyi"]
 [ext_resource type="PackedScene" uid="uid://q3ullx4ynedr" path="res://scenes/floating_wood.tscn" id="11_0gy3r"]
 [ext_resource type="PackedScene" uid="uid://civa027t1ujgd" path="res://models/wood.glb" id="12_3d0gg"]
+[ext_resource type="Texture2D" uid="uid://38bq4c203qpp" path="res://images/heart.png" id="12_ulkau"]
 [ext_resource type="AudioStream" uid="uid://p0mmxyhr1k84" path="res://sound/raft-or-die-soundtrack.mp3" id="14_uusn6"]
 [ext_resource type="AudioStream" uid="uid://d0tiriy73lcpe" path="res://sound/536346__ambientsoundapp__seagulls.wav" id="15_lmf5x"]
 [ext_resource type="AudioStream" uid="uid://dj86vrf6tchnp" path="res://sound/125225__tomtenney__02_lanes_island_water_1_48_24.wav" id="16_fcuen"]
@@ -94,6 +93,9 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eb1sx"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_asryg"]
+load_path = "res://.godot/imported/food.png-ac46eb3d0aa9dd0fa3460b3e9a383ebd.ctex"
 
 [sub_resource type="LabelSettings" id="LabelSettings_w7ykk"]
 font_size = 120
@@ -320,80 +322,64 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46, 5)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" type="ColorRect" parent="UI" groups=["health_listeners"]]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 248.0
-offset_bottom = 48.0
+[node name="HealthBar" type="Panel" parent="UI" groups=["health_listeners"]]
+offset_left = 64.0
+offset_top = 16.0
+offset_right = 304.0
+offset_bottom = 56.0
 script = ExtResource("7_vwmd8")
-
-[node name="Background" type="ColorRect" parent="UI/HealthBar"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
-color = Color(1, 0, 0, 1)
 
 [node name="Foreground" type="ColorRect" parent="UI/HealthBar"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 37.0
 color = Color(0.101961, 1, 0, 1)
 
-[node name="IconFrame" type="ColorRect" parent="UI/HealthBar"]
+[node name="IconFrame" type="Panel" parent="UI/HealthBar"]
 layout_mode = 0
-offset_left = 232.0
+offset_left = -56.0
 offset_top = -8.0
-offset_right = 288.0
 offset_bottom = 48.0
 
 [node name="Icon" type="TextureRect" parent="UI/HealthBar"]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 280.0
-offset_bottom = 40.0
-texture = ExtResource("8_ihvr8")
+offset_left = -54.0
+offset_top = -5.0
+offset_right = -4.0
+offset_bottom = 45.0
+texture = ExtResource("12_ulkau")
 expand_mode = 1
 
-[node name="HungerBar" type="ColorRect" parent="UI" groups=["hunger_listeners"]]
-offset_left = 448.0
-offset_top = 8.0
-offset_right = 688.0
-offset_bottom = 48.0
+[node name="HungerBar" type="Panel" parent="UI" groups=["hunger_listeners"]]
+offset_left = 504.0
+offset_top = 16.0
+offset_right = 744.0
+offset_bottom = 56.0
 script = ExtResource("8_pf6nc")
-
-[node name="Background" type="ColorRect" parent="UI/HungerBar"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
-color = Color(1, 0, 0, 1)
 
 [node name="Foreground" type="ColorRect" parent="UI/HungerBar"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 37.0
 color = Color(0.101961, 1, 0, 1)
 
-[node name="IconFrame" type="ColorRect" parent="UI/HungerBar"]
+[node name="IconFrame" type="Panel" parent="UI/HungerBar"]
 layout_mode = 0
-offset_left = 232.0
+offset_left = -56.0
 offset_top = -8.0
-offset_right = 288.0
 offset_bottom = 48.0
 
 [node name="Icon" type="TextureRect" parent="UI/HungerBar"]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 280.0
-offset_bottom = 40.0
-texture = ExtResource("10_a2pyi")
+offset_left = -53.0
+offset_top = -5.0
+offset_right = -3.0
+offset_bottom = 45.0
+texture = SubResource("CompressedTexture2D_asryg")
 expand_mode = 1
 
 [node name="GoalLabel" type="Label" parent="UI"]
