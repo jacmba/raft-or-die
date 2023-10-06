@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=37 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -13,6 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://q3ullx4ynedr" path="res://scenes/floating_wood.tscn" id="11_0gy3r"]
 [ext_resource type="PackedScene" uid="uid://civa027t1ujgd" path="res://models/wood.glb" id="12_3d0gg"]
 [ext_resource type="Texture2D" uid="uid://38bq4c203qpp" path="res://images/heart.png" id="12_ulkau"]
+[ext_resource type="Script" path="res://scripts/wood_icon_frame.gd" id="14_q1hj6"]
+[ext_resource type="Shader" uid="uid://cwqt6a5x8s3dq" path="res://shaders/bright_icon_shader.tres" id="14_qpmx7"]
+[ext_resource type="Texture2D" uid="uid://codik8n30ryro" path="res://images/wood.png" id="14_ubyam"]
 [ext_resource type="AudioStream" uid="uid://p0mmxyhr1k84" path="res://sound/raft-or-die-soundtrack.mp3" id="14_uusn6"]
 [ext_resource type="AudioStream" uid="uid://d0tiriy73lcpe" path="res://sound/536346__ambientsoundapp__seagulls.wav" id="15_lmf5x"]
 [ext_resource type="AudioStream" uid="uid://dj86vrf6tchnp" path="res://sound/125225__tomtenney__02_lanes_island_water_1_48_24.wav" id="16_fcuen"]
@@ -116,6 +119,9 @@ outline_size = 20
 font_size = 48
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_73jqb"]
+shader = ExtResource("14_qpmx7")
 
 [node name="IslandLevel" type="Node3D" groups=["message_listeners"]]
 script = ExtResource("1_n7ulm")
@@ -463,6 +469,38 @@ grow_vertical = 2
 size_flags_horizontal = 4
 label_settings = SubResource("LabelSettings_lfvrm")
 
+[node name="WoodIconFrame" type="Panel" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+script = ExtResource("14_q1hj6")
+
+[node name="Fill" type="ColorRect" parent="UI/WoodIconFrame"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 54.0
+offset_right = 106.0
+offset_bottom = 106.0
+rotation = 3.14159
+scale = Vector2(1, 1e-05)
+color = Color(0, 1, 0, 1)
+
+[node name="Icon" type="TextureRect" parent="UI/WoodIconFrame"]
+material = SubResource("ShaderMaterial_73jqb")
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 53.0
+offset_bottom = 53.0
+texture = ExtResource("14_ubyam")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="Goal" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.308, 0, 0)
 
@@ -492,3 +530,4 @@ autoplay = true
 [connection signal="craft_started" from="Player" to="." method="_on_craft_started"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="wood_collected" from="Player" to="." method="_on_wood_collected"]
+[connection signal="wood_collected" from="Player" to="UI/WoodIconFrame" method="_on_wood_collected"]
