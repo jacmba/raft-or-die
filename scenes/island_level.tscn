@@ -89,26 +89,26 @@ animation = &"Idle"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mocmr"]
 animation = &"Row"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b8i07"]
-xfade_time = 2.0
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_an6ua"]
-advance_mode = 2
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_snjsk"]
 advance_mode = 2
 advance_condition = &"dance"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c263r"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sspsr"]
+advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0ff8m"]
 states/Dance/node = SubResource("AnimationNodeAnimation_bav7l")
 states/Dance/position = Vector2(694, 78)
 states/Idle/node = SubResource("AnimationNodeAnimation_6p312")
-states/Idle/position = Vector2(363, 78)
+states/Idle/position = Vector2(357, 78)
 states/Row/node = SubResource("AnimationNodeAnimation_mocmr")
 states/Row/position = Vector2(526, 78)
 states/Start/position = Vector2(195, 78)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_b8i07"), "Idle", "Row", SubResource("AnimationNodeStateMachineTransition_an6ua"), "Row", "Dance", SubResource("AnimationNodeStateMachineTransition_snjsk")]
+transitions = ["Row", "Dance", SubResource("AnimationNodeStateMachineTransition_snjsk"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_c263r"), "Idle", "Row", SubResource("AnimationNodeStateMachineTransition_sspsr")]
+graph_offset = Vector2(-87.1739, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nc1d"]
 render_priority = -1
@@ -290,7 +290,7 @@ target = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
 
 [node name="CraftArea" type="MeshInstance3D" parent="Scenery/Island"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.25713, 9, -0.254254)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.25713, 9, 8.11588)
 visible = false
 mesh = SubResource("CylinderMesh_mur8v")
 
@@ -326,28 +326,24 @@ transform = Transform3D(0.979575, 0, -0.201078, 0, 1, 0, 0.201078, 0, 0.979575, 
 visible = false
 
 [node name="Skeleton3D" parent="Scenery/Sea/Raft/player/Armature" index="0"]
-bones/1/rotation = Quaternion(0.124149, -0.145793, -0.0439206, 0.980511)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
 bones/3/rotation = Quaternion(0, 0, 0, 1)
 bones/4/position = Vector3(0.154047, 0.277662, 2.51009e-09)
-bones/4/rotation = Quaternion(-0.564523, 0.433868, 0.549234, -0.437509)
+bones/4/rotation = Quaternion(-0.423381, 0.567512, 0.409671, -0.575194)
 bones/5/rotation = Quaternion(0.0763187, -0.00869326, 0.185263, 0.979682)
 bones/6/position = Vector3(-0.195331, 0.277662, 2.51009e-09)
-bones/6/rotation = Quaternion(0.0862528, 0.547854, 0.826024, 0.100507)
+bones/6/rotation = Quaternion(0.0554842, 0.752837, 0.644744, 0.120261)
 bones/7/rotation = Quaternion(0.254834, -0.0516152, 0.155712, 0.952969)
-bones/9/rotation = Quaternion(1.91276e-06, 2.49372e-08, 0.995164, -0.0982312)
-bones/10/rotation = Quaternion(-2.08052e-07, 5.81342e-08, -0.0982311, 0.995164)
-bones/11/rotation = Quaternion(1.62873e-06, -3.24672e-07, 0.995164, 0.0982308)
 
 [node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D" index="0"]
-transform = Transform3D(-0.934663, 0.346431, -0.0799399, 0.319377, 0.916901, 0.239353, 0.156217, 0.198184, -0.967636, -0.215901, 0.839054, 0.660308)
+transform = Transform3D(-0.887434, 0.272704, -0.371611, 0.439882, 0.741926, -0.506014, 0.137716, -0.612519, -0.778367, -0.0297022, 1.35764, 0.606557)
 bone_idx = 8
 
-[node name="wood" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="0" instance=ExtResource("12_3d0gg")]
-transform = Transform3D(0.2, 0, 0, 0, 0.585, 0, 0, 0, 1, 0, 0, 0)
+[node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="0"]
 visible = false
 
-[node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="1"]
-visible = false
+[node name="wood" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="1" instance=ExtResource("12_3d0gg")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="Dude" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D" index="1"]
 surface_material_override/0 = SubResource("StandardMaterial3D_qibrx")

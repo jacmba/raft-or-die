@@ -18,7 +18,7 @@ func _on_player_retired(body):
 	player = null
 	if connected:
 		connected = false
-		var player: Player = body as Player
+		player = body as Player
 		player.action_pressed.disconnect(_on_action_pressed)
 		get_tree().call_group("message_listeners", "_on_message_hide")
 	
