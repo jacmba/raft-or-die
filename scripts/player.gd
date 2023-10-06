@@ -4,6 +4,7 @@ class_name Player
 
 signal action_pressed
 signal wood_collected
+signal wood_picked
 signal craft_started
 signal craft_done
 signal player_dead
@@ -13,6 +14,7 @@ const gravity: float = 100
 const rot_speed: float = 10
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var anim_tree: AnimationTree = $AnimationTree
 @onready var hunger_timer: Timer = $HungerTimer
 @onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
@@ -27,10 +29,14 @@ var dead: bool = false
 var crafting: bool = false
 var has_wood: bool = false
 var can_craft: bool = false
+var eating: bool = false
 var health = 10
 var hunger = 10
 var surface_multiplier = 1
 var energy_multiplier = 1
+
+func _ready():
+	anim_tree.active = true
 
 # Process by frame
 func _process(_delta):
@@ -42,20 +48,31 @@ func _process(_delta):
 		
 	if Input.is_action_just_pressed("perform_action"):
 		if in_craft_area:
-			crafting = true
-			anim.play("Craft")
-			craft_started.emit()
-			hunger_timer.stop()
-			await get_tree().create_timer(5).timeout
-			anim.play("Idle")
-			craft_done.emit()
+			if can_craft:
+				crafting = true
+				anim_tree.active = false
+				anim.play("Craft")
+				craft_started.emit()
+				hunger_timer.stop()
+				await get_tree().create_timer(5).timeout
+				anim.play("Idle")
+				craft_done.emit()
+			elif has_wood:
+				anim_tree.active = false
+				anim.play("Drop")
+				await anim.animation_finished
+				audio_player.stream = wood_collect_sound
+				audio_player.play()
+				wood_collected.emit()
+				anim_tree.active = true
+				has_wood = false
 		else:
 			action_pressed.emit()
 
 # Process logic on physics sync
 func _physics_process(delta):
 	# Process gravity (float on water)
-	if not in_water or position.y > -1.0 :
+	if not in_water or position.y > -0.3 :
 		velocity.y -= gravity * delta
 		motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 	else:
@@ -63,7 +80,7 @@ func _physics_process(delta):
 		motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
 	
 	# Do nothing when dead
-	if dead or crafting:
+	if dead or crafting or eating:
 		return
 	
 	var movement: Vector2 = Vector2.ZERO
@@ -89,11 +106,11 @@ func _physics_process(delta):
 	rotation.y = lerp_angle(rotation.y, turn, rot_speed * delta)
 		
 	# Update animation
-	if movement.length() > 0:
-		if anim.current_animation != "Run":
-			anim.play("Run")
-	elif anim.current_animation != "Idle":
-		anim.play("Idle")
+	anim_tree.set("parameters/conditions/walking", movement.length() > 0)
+	anim_tree.set("parameters/conditions/stopping", movement.length() == 0.0)
+	anim_tree.set("parameters/conditions/in_water", in_water and position.y <= -0.3)
+	anim_tree.set("parameters/conditions/off_water", not in_water)
+	anim_tree.set("parameters/conditions/wood_on", has_wood)
 	
 	# Normalize movement
 	movement *= speed * delta * surface_multiplier * energy_multiplier
@@ -129,11 +146,12 @@ func take_bite():
 		get_tree().call_group("health_listeners", "_on_health_updated", health)
 	else:
 		dead = true
+		audio_player.stream = death_sound
+		audio_player.play()
+		anim_tree.active = false
 		anim.play("Die")
 		hunger_timer.stop()
 		await anim.animation_finished
-		audio_player.stream = death_sound
-		audio_player.play()
 		player_dead.emit()
 		
 func eat():
@@ -144,19 +162,27 @@ func eat():
 		audio_player.play()
 		energy_multiplier = 10
 		hunger_timer.stop()
+		eating = true
+		anim_tree.active = false
+		anim.play("Eating")
+		await anim.animation_finished
+		eating = false
+		anim_tree.active = true
 		hunger_timer.start()
 		
 func collect_wood():
 	has_wood = true
-	wood_collected.emit()
 	audio_player.stream = wood_collect_sound
 	audio_player.play()
+	wood_picked.emit()
 	
 func _on_craft_area_entered(_body):
+	in_craft_area = true
 	if not can_craft:
+		if has_wood:
+			get_tree().call_group("message_listeners", "_on_message_show", "Press action to drop wood")
 		return
 	get_tree().call_group("message_listeners", "_on_message_show", "Press action button to start crafting")
-	in_craft_area = true
 	
 func _on_craft_area_exit(_body):
 	get_tree().call_group("message_listeners", "_on_message_hide")

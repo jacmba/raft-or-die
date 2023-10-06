@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=58 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
 [ext_resource type="Script" path="res://scripts/hunger_bar.gd" id="8_pf6nc"]
+[ext_resource type="Texture2D" uid="uid://b1lmavd5s30ht" path="res://models/wood_Wood.png" id="8_sshvu"]
 [ext_resource type="PackedScene" uid="uid://q3ullx4ynedr" path="res://scenes/floating_wood.tscn" id="11_0gy3r"]
 [ext_resource type="PackedScene" uid="uid://civa027t1ujgd" path="res://models/wood.glb" id="12_3d0gg"]
 [ext_resource type="Texture2D" uid="uid://38bq4c203qpp" path="res://images/heart.png" id="12_ulkau"]
@@ -56,6 +57,153 @@ shader = ExtResource("5_h5gxf")
 material = SubResource("ShaderMaterial_pk46v")
 size = Vector2(1000, 1000)
 orientation = 1
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k8nad"]
+load_path = "res://.godot/imported/player_player.png-6e6df59bac7707a9bb8ef3ac211bf576.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qiicn"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qibrx"]
+next_pass = SubResource("StandardMaterial3D_qiicn")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = SubResource("CompressedTexture2D_k8nad")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bav7l"]
+animation = &"Dance"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6p312"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mocmr"]
+animation = &"Row"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b8i07"]
+xfade_time = 2.0
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_an6ua"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_snjsk"]
+advance_mode = 2
+advance_condition = &"dance"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0ff8m"]
+states/Dance/node = SubResource("AnimationNodeAnimation_bav7l")
+states/Dance/position = Vector2(694, 78)
+states/Idle/node = SubResource("AnimationNodeAnimation_6p312")
+states/Idle/position = Vector2(363, 78)
+states/Row/node = SubResource("AnimationNodeAnimation_mocmr")
+states/Row/position = Vector2(526, 78)
+states/Start/position = Vector2(195, 78)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_b8i07"), "Idle", "Row", SubResource("AnimationNodeStateMachineTransition_an6ua"), "Row", "Dance", SubResource("AnimationNodeStateMachineTransition_snjsk")]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nc1d"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wb22"]
+next_pass = SubResource("StandardMaterial3D_3nc1d")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klm3j"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84xn2"]
+next_pass = SubResource("StandardMaterial3D_klm3j")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48f04"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hg24o"]
+next_pass = SubResource("StandardMaterial3D_48f04")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1ih5"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1k6ul"]
+next_pass = SubResource("StandardMaterial3D_p1ih5")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mstka"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m366b"]
+next_pass = SubResource("StandardMaterial3D_mstka")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
 
 [sub_resource type="Animation" id="Animation_j8qr5"]
 resource_name = "Tide"
@@ -127,7 +275,7 @@ shader = ExtResource("14_qpmx7")
 script = ExtResource("1_n7ulm")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 9, 15)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 9, 25.2058)
 environment = SubResource("Environment_2ilta")
 attributes = SubResource("CameraAttributesPractical_7rhv0")
 current = true
@@ -142,7 +290,7 @@ target = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
 
 [node name="CraftArea" type="MeshInstance3D" parent="Scenery/Island"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 7, 2)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.25713, 9, -0.254254)
 visible = false
 mesh = SubResource("CylinderMesh_mur8v")
 
@@ -174,22 +322,72 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.419
 visible = false
 
 [node name="player" parent="Scenery/Sea/Raft" instance=ExtResource("5_oclfm")]
-transform = Transform3D(0.821149, 0, -0.570714, 0, 1, 0, 0.570714, 0, 0.821149, 0.407092, 0.0567169, -0.0917416)
+transform = Transform3D(0.979575, 0, -0.201078, 0, 1, 0, 0.201078, 0, 0.979575, 0.407092, 0.0567169, -0.0917416)
 visible = false
 
+[node name="Skeleton3D" parent="Scenery/Sea/Raft/player/Armature" index="0"]
+bones/1/rotation = Quaternion(0.124149, -0.145793, -0.0439206, 0.980511)
+bones/3/rotation = Quaternion(0, 0, 0, 1)
+bones/4/position = Vector3(0.154047, 0.277662, 2.51009e-09)
+bones/4/rotation = Quaternion(-0.564523, 0.433868, 0.549234, -0.437509)
+bones/5/rotation = Quaternion(0.0763187, -0.00869326, 0.185263, 0.979682)
+bones/6/position = Vector3(-0.195331, 0.277662, 2.51009e-09)
+bones/6/rotation = Quaternion(0.0862528, 0.547854, 0.826024, 0.100507)
+bones/7/rotation = Quaternion(0.254834, -0.0516152, 0.155712, 0.952969)
+bones/9/rotation = Quaternion(1.91276e-06, 2.49372e-08, 0.995164, -0.0982312)
+bones/10/rotation = Quaternion(-2.08052e-07, 5.81342e-08, -0.0982311, 0.995164)
+bones/11/rotation = Quaternion(1.62873e-06, -3.24672e-07, 0.995164, 0.0982308)
+
+[node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D" index="0"]
+transform = Transform3D(-0.934663, 0.346431, -0.0799399, 0.319377, 0.916901, 0.239353, 0.156217, 0.198184, -0.967636, -0.215901, 0.839054, 0.660308)
+bone_idx = 8
+
+[node name="wood" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="0" instance=ExtResource("12_3d0gg")]
+transform = Transform3D(0.2, 0, 0, 0, 0.585, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="1"]
+visible = false
+
+[node name="Dude" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_qibrx")
+
+[node name="AnimationPlayer" parent="Scenery/Sea/Raft/player" index="1"]
+autoplay = "Row"
+
+[node name="AnimationTree" type="AnimationTree" parent="Scenery/Sea/Raft/player"]
+tree_root = SubResource("AnimationNodeStateMachine_0ff8m")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/dance = false
+
 [node name="wood" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
+
+[node name="Cube" parent="Scenery/Sea/Raft/wood" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_0wb22")
 
 [node name="wood2" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.524342, 0, 0)
 
+[node name="Cube" parent="Scenery/Sea/Raft/wood2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_84xn2")
+
 [node name="wood3" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01184, 0, 0)
+
+[node name="Cube" parent="Scenery/Sea/Raft/wood3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_hg24o")
 
 [node name="wood4" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.562536, 0, -0.693306)
 
+[node name="Cube" parent="Scenery/Sea/Raft/wood4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_1k6ul")
+
 [node name="wood5" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.562536, 0, 0.717213)
+
+[node name="Cube" parent="Scenery/Sea/Raft/wood5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_m366b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Scenery/Sea"]
 autoplay = "Tide"
@@ -306,7 +504,7 @@ shape = SubResource("BoxShape3D_eb1sx")
 [node name="FloatingWoods" type="Node3D" parent="Scenery/Sea"]
 
 [node name="FloatingWood" parent="Scenery/Sea/FloatingWoods" instance=ExtResource("11_0gy3r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2315, 0, 19.3983)
 
 [node name="FloatingWood2" parent="Scenery/Sea/FloatingWoods" instance=ExtResource("11_0gy3r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -2)
@@ -324,7 +522,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 11)
 transform = Transform3D(0.5, 0.612373, 0.612373, 0.866025, -0.353553, -0.353553, 0, 0.707107, -0.707107, 0, 18, -1)
 
 [node name="Player" parent="." instance=ExtResource("4_k7ppr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.03242, 9.13894)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -531,3 +729,11 @@ autoplay = true
 [connection signal="player_dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="wood_collected" from="Player" to="." method="_on_wood_collected"]
 [connection signal="wood_collected" from="Player" to="UI/WoodIconFrame" method="_on_wood_collected"]
+[connection signal="wood_picked" from="Player" to="." method="_on_wood_picked"]
+
+[editable path="Scenery/Sea/Raft/player"]
+[editable path="Scenery/Sea/Raft/wood"]
+[editable path="Scenery/Sea/Raft/wood2"]
+[editable path="Scenery/Sea/Raft/wood3"]
+[editable path="Scenery/Sea/Raft/wood4"]
+[editable path="Scenery/Sea/Raft/wood5"]

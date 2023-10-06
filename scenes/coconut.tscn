@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8oh7tuiic51t"]
+[gd_scene load_steps=10 format=3 uid="uid://b8oh7tuiic51t"]
 
 [ext_resource type="Texture2D" uid="uid://lk45reb0byf7" path="res://models/coconut_Coconut.png" id="1_6w850"]
 [ext_resource type="Script" path="res://scripts/coconut.gd" id="1_pjnov"]
@@ -66,43 +66,6 @@ distance_fade_max_distance = 0.0
 radius = 0.198348
 height = 0.476154
 
-[sub_resource type="Animation" id="Animation_utkcd"]
-resource_name = "collect"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_ppjby"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_g3laj"]
-_data = {
-"RESET": SubResource("Animation_ppjby"),
-"collect": SubResource("Animation_utkcd")
-}
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_muqu7"]
 
 [node name="Coconut" type="RigidBody3D"]
@@ -122,12 +85,8 @@ shape = SubResource("CapsuleShape3D_548rc")
 [node name="FallTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_g3laj")
-}
-
 [node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
@@ -136,3 +95,4 @@ shape = SubResource("SphereShape3D_muqu7")
 
 [connection signal="timeout" from="FallTimer" to="." method="_on_coconut_fall"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_coconut_collected"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_player_exit"]

@@ -23,6 +23,6 @@ func _on_player_retired(body):
 		get_tree().call_group("message_listeners", "_on_message_hide")
 	
 func _on_action_pressed():
-	if player != null:
+	if player != null and not player.has_wood:
 		player.collect_wood()
 	queue_free()

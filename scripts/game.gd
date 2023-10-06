@@ -10,6 +10,7 @@ var freeze_message: bool = false
 @onready var raft: Node3D = $Scenery/Sea/Raft
 @onready var player: Player = $Player
 @onready var finished_player: Node3D = $Scenery/Sea/Raft/player
+@onready var fp_anim_tree: AnimationTree = $Scenery/Sea/Raft/player/AnimationTree
 @onready var cam: CamChase = $Camera3D
 @onready var goal: Node3D = $Goal
 @onready var goal_label: Label = $UI/GoalLabel
@@ -29,6 +30,7 @@ func _process(delta):
 		if raft != null:
 			raft.global_position.x += 5 * delta
 		if not left and raft.global_position.x > goal.position.x:
+			fp_anim_tree.set("parameters/conditions/dance", true)
 			left = true
 			goal_label.visible = true
 			cam.stop_chasing()
@@ -36,20 +38,25 @@ func _process(delta):
 			soundtrack.play()
 			await  get_tree().create_timer(5).timeout
 			raft.queue_free()
+			
+func _on_wood_picked():
+	_on_message_show("Drop wood in crafting area")
+	craft_area.visible = true
 	
 func _on_wood_collected():
 	wood += 1
 	if wood == 5:
 		freeze_message = true
 		craft_area.set_process(true)
-		craft_area.visible = true
 		player.can_craft = true
-		message_label.text = "All wood collected.\nFind the crafting are and build a raft"
+		message_label.text = "Wood gathering complete.\nYou can now build the raft"
 		chimes.stream = all_wood_sound
 		chimes.play()
 		await get_tree().create_timer(5).timeout
 		message_label.text = ""
 		freeze_message = false
+	else:
+		craft_area.visible = false
 		
 func _on_craft_started():
 	craft_area.visible = false
@@ -62,6 +69,7 @@ func _on_craft_done():
 		cam.target = raft
 		player.queue_free()
 		finished_player.visible = true
+		fp_anim_tree.active = true
 		await get_tree().create_timer(1).timeout
 		leaving = true
 	
