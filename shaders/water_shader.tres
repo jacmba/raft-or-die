@@ -211,7 +211,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-367.071, -9.39972)
 nodes/vertex/0/position = Vector2(1300, 40)
 nodes/fragment/0/position = Vector2(1380, 60)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorConstant_5pysb")
