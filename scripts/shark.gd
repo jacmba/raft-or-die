@@ -6,6 +6,8 @@ const patrol_speed: float = 300
 const chase_speed: float = 600
 const rot_speed: float = 5
 
+var level_multiplier: float = 1.0
+
 enum Status {
 	PATROL,
 	CHASE,
@@ -17,10 +19,14 @@ enum Status {
 @onready var status: Status = Status.PATROL
 @onready var waypoints = nav_zone.get_children()
 @onready var anim: AnimationPlayer = $AnimationPlayer
-@onready var bite_timer: Timer = $AttackTimer
 
 var wp: int = 0
 var player: Player
+
+func _ready():
+	var options: Options = Options.get_instance()
+	level_multiplier = options.difficulty / 2.0
+	$CollisionShape3D.scale *= level_multiplier
 
 func _physics_process(delta):
 	var direction: Vector3 = Vector3.ZERO
@@ -50,9 +56,9 @@ func _physics_process(delta):
 			if not player.in_water or player.dead:
 				status = Status.PATROL
 			elif dist < 2:
+				advance = 0
 				status = Status.ATTACK
 				anim.play("Attack")
-				bite_timer.start()
 				
 		Status.ATTACK:
 			target_pos = player.position
@@ -62,7 +68,6 @@ func _physics_process(delta):
 					status = Status.PATROL
 				else:
 					status = Status.CHASE
-				bite_timer.stop()
 				anim.play("Swim")
 	
 	if not global_transform.origin.is_equal_approx(global_transform.origin - velocity):
@@ -71,7 +76,7 @@ func _physics_process(delta):
 		rotation = lerp(old_rot, rotation, delta * rot_speed)
 	direction = global_position.direction_to(target_pos)
 	
-	velocity = direction * advance
+	velocity = direction * advance * level_multiplier
 	move_and_slide()
 
 func _on_player_detected(body):
@@ -81,8 +86,6 @@ func _on_player_detected(body):
 	
 func _on_player_lost(_body):
 	player = null
-	if not bite_timer.is_stopped():
-		bite_timer.stop()
 	if status != Status.PATROL:
 		status = Status.PATROL
 		anim.play("Swim")

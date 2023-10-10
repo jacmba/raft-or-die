@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=3 uid="uid://clhqc85k2bohg"]
+
+[ext_resource type="Script" path="res://scripts/options_menu.gd" id="1_0hl6k"]
+[ext_resource type="Texture2D" uid="uid://b4er0qt8x2ewd" path="res://images/splash.png" id="1_tgqyn"]
+[ext_resource type="AudioStream" uid="uid://p0mmxyhr1k84" path="res://sound/raft-or-die-soundtrack.mp3" id="2_dfb7w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8rxdf"]
+font_size = 72
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p4fgo"]
+font_size = 48
+
+[sub_resource type="Theme" id="Theme_ccs4l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pgh1r"]
+font_size = 32
+
+[sub_resource type="Theme" id="Theme_n1cui"]
+default_font_size = 48
+
+[node name="OptionsMenu" type="Node2D"]
+script = ExtResource("1_0hl6k")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(516, 1372)
+scale = Vector2(2.34375, 5.35938)
+texture = ExtResource("1_tgqyn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 256.0
+offset_right = 896.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_8rxdf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Music"
+label_settings = SubResource("LabelSettings_p4fgo")
+
+[node name="MusicCheck" type="CheckBox" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = SubResource("Theme_ccs4l")
+
+[node name="SfxLabel" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Sound FX         "
+label_settings = SubResource("LabelSettings_p4fgo")
+
+[node name="SfxCheck" type="CheckBox" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = SubResource("Theme_ccs4l")
+
+[node name="LevelLabel" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Difficulty"
+label_settings = SubResource("LabelSettings_p4fgo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="MinusButton" type="Button" parent="VBoxContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = "<"
+
+[node name="DifficultyLabel" type="Label" parent="VBoxContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = "EASY"
+label_settings = SubResource("LabelSettings_pgh1r")
+
+[node name="PlusButton" type="Button" parent="VBoxContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = ">"
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_n1cui")
+text = "Return"
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_dfb7w")
+autoplay = true
+bus = &"Music"
+
+[connection signal="toggled" from="VBoxContainer/GridContainer/MusicCheck" to="." method="_on_music_toggle"]
+[connection signal="toggled" from="VBoxContainer/GridContainer/SfxCheck" to="." method="_on_sfx_toggle"]
+[connection signal="button_up" from="VBoxContainer/GridContainer/HBoxContainer/MinusButton" to="." method="_on_difficulty_decrease"]
+[connection signal="button_up" from="VBoxContainer/GridContainer/HBoxContainer/PlusButton" to="." method="_on_difficulty_increase"]
+[connection signal="button_up" from="VBoxContainer/BackButton" to="." method="_on_back_click"]

@@ -76,7 +76,7 @@ func _on_craft_done():
 func _input(event):
 	if (left or dead) and event is InputEventKey and event.is_pressed():
 		if event.is_action_pressed("quit"):
-			get_tree().quit()
+			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 		else:
 			get_tree().reload_current_scene()
 			

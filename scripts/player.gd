@@ -41,7 +41,7 @@ func _ready():
 # Process by frame
 func _process(_delta):
 	if Input.is_action_just_pressed("quit"):
-		get_tree().quit()
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 		
 	if dead:
 		return

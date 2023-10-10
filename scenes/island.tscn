@@ -89,5 +89,6 @@ libraries = {
 
 [node name="QuakeAudio" type="AudioStreamPlayer3D" parent="." index="3"]
 stream = ExtResource("3_1laqw")
+bus = &"SFX"
 
 [connection signal="timeout" from="SinkTimer" to="." method="_on_sink" flags=18]

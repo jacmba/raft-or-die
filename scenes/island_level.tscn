@@ -703,18 +703,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.308, 0, 0)
 [node name="Soundtrack" type="AudioStreamPlayer2D" parent="Background sound"]
 stream = ExtResource("14_uusn6")
 autoplay = true
+bus = &"Music"
 
 [node name="Seagulls" type="AudioStreamPlayer2D" parent="Background sound"]
 stream = ExtResource("15_lmf5x")
 volume_db = 1.5
 autoplay = true
+bus = &"SFX"
 
 [node name="Sea" type="AudioStreamPlayer2D" parent="Background sound"]
 stream = ExtResource("16_fcuen")
 volume_db = 1.5
 autoplay = true
+bus = &"SFX"
 
 [node name="Chimes" type="AudioStreamPlayer2D" parent="Background sound"]
+bus = &"SFX"
 
 [connection signal="body_entered" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_entered"]
 [connection signal="body_exited" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_exit"]
