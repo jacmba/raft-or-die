@@ -37,16 +37,6 @@ jobs:
         with:
           name: windows
           path: build/windows
-      - name: Publish to Itch.IO
-        run: |
-          apt update && apt upgrade -y && apt install curl -y
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          chmod +x butler
-          alias butler=$(pwd)/butler
-          butler -v
-          butler login
-          butler push build/windows ${ITCH_IO_GAME}:win_postmortem
 
   export-linux:
     name: Linux Export
@@ -74,16 +64,6 @@ jobs:
         with:
           name: linux
           path: build/linux
-      - name: Publish to Itch.IO
-        run: |
-          apt update && apt upgrade -y && apt install curl -y
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          chmod +x butler
-          alias butler=$(pwd)/butler
-          butler -v
-          butler login
-          butler push build/linux ${ITCH_IO_GAME}:linux_postmortem
 
   export-web:
     name: Web Export
@@ -111,16 +91,6 @@ jobs:
         with:
           name: web
           path: build/web
-      - name: Publish to Itch.IO
-        run: |
-          apt update && apt upgrade -y && apt install curl -y
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          chmod +x butler
-          alias butler=$(pwd)/butler
-          butler -v
-          butler login
-          butler push build/web ${ITCH_IO_GAME}:web_postmortem
   
   export-mac:
     name: Mac Export
@@ -148,13 +118,3 @@ jobs:
         with:
           name: mac
           path: build/mac
-      - name: Publish to Itch.IO
-        run: |
-          apt update && apt upgrade -y && apt install curl -y
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          chmod +x butler
-          alias butler=$(pwd)/butler
-          butler -v
-          butler login
-          butler push build/mac ${ITCH_IO_GAME}:mac_postmortem
