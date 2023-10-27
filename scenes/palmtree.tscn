@@ -1,7 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfdplq1pr60cj"]
+[gd_scene load_steps=8 format=3 uid="uid://bfdplq1pr60cj"]
 
 [ext_resource type="PackedScene" uid="uid://dqmjeiuxpjlgk" path="res://models/palmtree.glb" id="1_d06sx"]
 [ext_resource type="Script" path="res://scripts/palmtree.gd" id="2_bjsr4"]
+[ext_resource type="Texture2D" uid="uid://c377cff8hyyc0" path="res://models/palmtree_palmtree.png" id="3_d67ny"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8ni2"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_547ia"]
+next_pass = SubResource("StandardMaterial3D_x8ni2")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("3_d67ny")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ihrak"]
 height = 4.71199
@@ -13,6 +33,9 @@ radius = 1.29935
 
 [node name="palmtree" instance=ExtResource("1_d06sx")]
 script = ExtResource("2_bjsr4")
+
+[node name="Circle" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_547ia")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
 collision_mask = 3

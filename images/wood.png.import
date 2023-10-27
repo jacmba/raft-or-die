@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b67ihrrllybj4"
-path="res://.godot/imported/food.jpg-f9ad50b16812a4518344facf77247abd.ctex"
+uid="uid://codik8n30ryro"
+path="res://.godot/imported/wood.png-598c6cc72ae6bce77162ab465f2a29cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/food.jpg"
-dest_files=["res://.godot/imported/food.jpg-f9ad50b16812a4518344facf77247abd.ctex"]
+source_file="res://images/wood.png"
+dest_files=["res://.godot/imported/wood.png-598c6cc72ae6bce77162ab465f2a29cd.ctex"]
 
 [params]
 

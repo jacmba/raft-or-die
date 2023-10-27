@@ -18,11 +18,11 @@ func _on_player_retired(body):
 	player = null
 	if connected:
 		connected = false
-		var player: Player = body as Player
+		player = body as Player
 		player.action_pressed.disconnect(_on_action_pressed)
 		get_tree().call_group("message_listeners", "_on_message_hide")
 	
 func _on_action_pressed():
-	if player != null:
+	if player != null and not player.has_wood:
 		player.collect_wood()
 	queue_free()

@@ -1,26 +1,30 @@
-[gd_scene load_steps=32 format=3 uid="uid://unuowidn88yp"]
+[gd_scene load_steps=58 format=3 uid="uid://unuowidn88yp"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_n7ulm"]
 [ext_resource type="PackedScene" uid="uid://bfdplq1pr60cj" path="res://scenes/palmtree.tscn" id="2_kabme"]
 [ext_resource type="PackedScene" uid="uid://grhkgyq37mqw" path="res://scenes/island.tscn" id="2_r6x8h"]
 [ext_resource type="Script" path="res://scripts/cam_chase.gd" id="2_vudvs"]
 [ext_resource type="PackedScene" uid="uid://4bd0qdgjxr7e" path="res://scenes/player.tscn" id="4_k7ppr"]
+[ext_resource type="Shader" uid="uid://6dlb6capx0fs" path="res://shaders/water_shader.tres" id="5_h5gxf"]
 [ext_resource type="PackedScene" uid="uid://ct8e41tgw2u2o" path="res://scenes/finished_player.tscn" id="5_oclfm"]
 [ext_resource type="PackedScene" uid="uid://clvwqfjgw7t18" path="res://scenes/shark.tscn" id="6_k3k6x"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_vwmd8"]
-[ext_resource type="Texture2D" uid="uid://dhv560j5meuie" path="res://images/heart.jpg" id="8_ihvr8"]
 [ext_resource type="Script" path="res://scripts/hunger_bar.gd" id="8_pf6nc"]
-[ext_resource type="Texture2D" uid="uid://b67ihrrllybj4" path="res://images/food.jpg" id="10_a2pyi"]
+[ext_resource type="Texture2D" uid="uid://b1lmavd5s30ht" path="res://models/wood_Wood.png" id="8_sshvu"]
 [ext_resource type="PackedScene" uid="uid://q3ullx4ynedr" path="res://scenes/floating_wood.tscn" id="11_0gy3r"]
 [ext_resource type="PackedScene" uid="uid://civa027t1ujgd" path="res://models/wood.glb" id="12_3d0gg"]
+[ext_resource type="Texture2D" uid="uid://38bq4c203qpp" path="res://images/heart.png" id="12_ulkau"]
+[ext_resource type="Script" path="res://scripts/wood_icon_frame.gd" id="14_q1hj6"]
+[ext_resource type="Shader" uid="uid://cwqt6a5x8s3dq" path="res://shaders/bright_icon_shader.tres" id="14_qpmx7"]
+[ext_resource type="Texture2D" uid="uid://codik8n30ryro" path="res://images/wood.png" id="14_ubyam"]
 [ext_resource type="AudioStream" uid="uid://p0mmxyhr1k84" path="res://sound/raft-or-die-soundtrack.mp3" id="14_uusn6"]
 [ext_resource type="AudioStream" uid="uid://d0tiriy73lcpe" path="res://sound/536346__ambientsoundapp__seagulls.wav" id="15_lmf5x"]
 [ext_resource type="AudioStream" uid="uid://dj86vrf6tchnp" path="res://sound/125225__tomtenney__02_lanes_island_water_1_48_24.wav" id="16_fcuen"]
 
 [sub_resource type="Environment" id="Environment_2ilta"]
 background_mode = 1
-background_color = Color(0.41181, 0.866621, 0.847089, 1)
-ambient_light_source = 2
+background_color = Color(0.184314, 0.537255, 0.741176, 1)
+ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 adjustment_brightness = 0.01
@@ -45,19 +49,176 @@ height = 10.0
 height = 6.0
 radius = 2.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fricg"]
-transparency = 1
-albedo_color = Color(0, 0.27451, 0.419608, 0.901961)
-metallic = 0.29
-metallic_specular = 0.88
-roughness = 0.08
-refraction_enabled = true
-refraction_scale = 0.21
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pk46v"]
+render_priority = 0
+shader = ExtResource("5_h5gxf")
 
 [sub_resource type="QuadMesh" id="QuadMesh_7dl66"]
-material = SubResource("StandardMaterial3D_fricg")
+material = SubResource("ShaderMaterial_pk46v")
 size = Vector2(1000, 1000)
 orientation = 1
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k8nad"]
+load_path = "res://.godot/imported/player_player.png-6e6df59bac7707a9bb8ef3ac211bf576.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qiicn"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qibrx"]
+next_pass = SubResource("StandardMaterial3D_qiicn")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = SubResource("CompressedTexture2D_k8nad")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bav7l"]
+animation = &"Dance"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6p312"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mocmr"]
+animation = &"Row"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_snjsk"]
+advance_mode = 2
+advance_condition = &"dance"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c263r"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sspsr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0ff8m"]
+states/Dance/node = SubResource("AnimationNodeAnimation_bav7l")
+states/Dance/position = Vector2(694, 78)
+states/Idle/node = SubResource("AnimationNodeAnimation_6p312")
+states/Idle/position = Vector2(357, 78)
+states/Row/node = SubResource("AnimationNodeAnimation_mocmr")
+states/Row/position = Vector2(526, 78)
+states/Start/position = Vector2(195, 78)
+transitions = ["Row", "Dance", SubResource("AnimationNodeStateMachineTransition_snjsk"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_c263r"), "Idle", "Row", SubResource("AnimationNodeStateMachineTransition_sspsr")]
+graph_offset = Vector2(-87.1739, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nc1d"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wb22"]
+next_pass = SubResource("StandardMaterial3D_3nc1d")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klm3j"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84xn2"]
+next_pass = SubResource("StandardMaterial3D_klm3j")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48f04"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hg24o"]
+next_pass = SubResource("StandardMaterial3D_48f04")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1ih5"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1k6ul"]
+next_pass = SubResource("StandardMaterial3D_p1ih5")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mstka"]
+render_priority = -1
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m366b"]
+next_pass = SubResource("StandardMaterial3D_mstka")
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("8_sshvu")
+roughness = 0.0
+rim_enabled = true
+rim_tint = 1.0
+grow_amount = 0.01
+proximity_fade_distance = 0.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="Animation" id="Animation_prxhy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_j8qr5"]
 resource_name = "Tide"
@@ -76,21 +237,6 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 0.2, 0), Vector3(0, 0, 0), Vector3(0, -0.2, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_prxhy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hmcga"]
 _data = {
 "RESET": SubResource("Animation_prxhy"),
@@ -98,6 +244,9 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eb1sx"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_asryg"]
+load_path = "res://.godot/imported/food.png-ac46eb3d0aa9dd0fa3460b3e9a383ebd.ctex"
 
 [sub_resource type="LabelSettings" id="LabelSettings_w7ykk"]
 font_size = 120
@@ -119,11 +268,14 @@ font_size = 48
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_73jqb"]
+shader = ExtResource("14_qpmx7")
+
 [node name="IslandLevel" type="Node3D" groups=["message_listeners"]]
 script = ExtResource("1_n7ulm")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 9, 15)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 9, 25.2058)
 environment = SubResource("Environment_2ilta")
 attributes = SubResource("CameraAttributesPractical_7rhv0")
 current = true
@@ -138,7 +290,7 @@ target = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.50393, 0)
 
 [node name="CraftArea" type="MeshInstance3D" parent="Scenery/Island"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 7, 2)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.25713, 9, 8.11588)
 visible = false
 mesh = SubResource("CylinderMesh_mur8v")
 
@@ -170,22 +322,68 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.419
 visible = false
 
 [node name="player" parent="Scenery/Sea/Raft" instance=ExtResource("5_oclfm")]
-transform = Transform3D(0.821149, 0, -0.570714, 0, 1, 0, 0.570714, 0, 0.821149, 0.407092, 0.0567169, -0.0917416)
+transform = Transform3D(0.979575, 0, -0.201078, 0, 1, 0, 0.201078, 0, 0.979575, 0.407092, 0.0567169, -0.0917416)
 visible = false
 
+[node name="Skeleton3D" parent="Scenery/Sea/Raft/player/Armature" index="0"]
+bones/1/rotation = Quaternion(0, 0, 0, 1)
+bones/3/rotation = Quaternion(0, 0, 0, 1)
+bones/4/position = Vector3(0.154047, 0.277662, 2.51009e-09)
+bones/4/rotation = Quaternion(-0.423381, 0.567512, 0.409671, -0.575194)
+bones/5/rotation = Quaternion(0.0763187, -0.00869326, 0.185263, 0.979682)
+bones/6/position = Vector3(-0.195331, 0.277662, 2.51009e-09)
+bones/6/rotation = Quaternion(0.0554842, 0.752837, 0.644744, 0.120261)
+bones/7/rotation = Quaternion(0.254834, -0.0516152, 0.155712, 0.952969)
+
+[node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D" index="0"]
+transform = Transform3D(-0.887433, 0.272704, -0.371611, 0.439883, 0.741925, -0.506014, 0.137716, -0.612519, -0.778367, -0.0297021, 1.35764, 0.606557)
+bone_idx = 8
+
+[node name="ToolSpot" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="0"]
+visible = false
+
+[node name="wood" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D/ToolSpot" index="1" instance=ExtResource("12_3d0gg")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="Dude" parent="Scenery/Sea/Raft/player/Armature/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_qibrx")
+
+[node name="AnimationPlayer" parent="Scenery/Sea/Raft/player" index="1"]
+autoplay = "Row"
+
+[node name="AnimationTree" type="AnimationTree" parent="Scenery/Sea/Raft/player"]
+tree_root = SubResource("AnimationNodeStateMachine_0ff8m")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/dance = false
+
 [node name="wood" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
+
+[node name="Cube" parent="Scenery/Sea/Raft/wood" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_0wb22")
 
 [node name="wood2" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.524342, 0, 0)
 
+[node name="Cube" parent="Scenery/Sea/Raft/wood2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_84xn2")
+
 [node name="wood3" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01184, 0, 0)
+
+[node name="Cube" parent="Scenery/Sea/Raft/wood3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_hg24o")
 
 [node name="wood4" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.562536, 0, -0.693306)
 
+[node name="Cube" parent="Scenery/Sea/Raft/wood4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_1k6ul")
+
 [node name="wood5" parent="Scenery/Sea/Raft" instance=ExtResource("12_3d0gg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.562536, 0, 0.717213)
+
+[node name="Cube" parent="Scenery/Sea/Raft/wood5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_m366b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Scenery/Sea"]
 autoplay = "Tide"
@@ -302,7 +500,7 @@ shape = SubResource("BoxShape3D_eb1sx")
 [node name="FloatingWoods" type="Node3D" parent="Scenery/Sea"]
 
 [node name="FloatingWood" parent="Scenery/Sea/FloatingWoods" instance=ExtResource("11_0gy3r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2315, 0, 19.3983)
 
 [node name="FloatingWood2" parent="Scenery/Sea/FloatingWoods" instance=ExtResource("11_0gy3r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -2)
@@ -320,84 +518,68 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 11)
 transform = Transform3D(0.5, 0.612373, 0.612373, 0.866025, -0.353553, -0.353553, 0, 0.707107, -0.707107, 0, 18, -1)
 
 [node name="Player" parent="." instance=ExtResource("4_k7ppr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.03242, 9.13894)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" type="ColorRect" parent="UI" groups=["health_listeners"]]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 248.0
-offset_bottom = 48.0
+[node name="HealthBar" type="Panel" parent="UI" groups=["health_listeners"]]
+offset_left = 64.0
+offset_top = 16.0
+offset_right = 304.0
+offset_bottom = 56.0
 script = ExtResource("7_vwmd8")
-
-[node name="Background" type="ColorRect" parent="UI/HealthBar"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
-color = Color(1, 0, 0, 1)
 
 [node name="Foreground" type="ColorRect" parent="UI/HealthBar"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 37.0
 color = Color(0.101961, 1, 0, 1)
 
-[node name="IconFrame" type="ColorRect" parent="UI/HealthBar"]
+[node name="IconFrame" type="Panel" parent="UI/HealthBar"]
 layout_mode = 0
-offset_left = 232.0
+offset_left = -56.0
 offset_top = -8.0
-offset_right = 288.0
 offset_bottom = 48.0
 
 [node name="Icon" type="TextureRect" parent="UI/HealthBar"]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 280.0
-offset_bottom = 40.0
-texture = ExtResource("8_ihvr8")
+offset_left = -54.0
+offset_top = -5.0
+offset_right = -4.0
+offset_bottom = 45.0
+texture = ExtResource("12_ulkau")
 expand_mode = 1
 
-[node name="HungerBar" type="ColorRect" parent="UI" groups=["hunger_listeners"]]
-offset_left = 448.0
-offset_top = 8.0
-offset_right = 688.0
-offset_bottom = 48.0
+[node name="HungerBar" type="Panel" parent="UI" groups=["hunger_listeners"]]
+offset_left = 504.0
+offset_top = 16.0
+offset_right = 744.0
+offset_bottom = 56.0
 script = ExtResource("8_pf6nc")
-
-[node name="Background" type="ColorRect" parent="UI/HungerBar"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
-color = Color(1, 0, 0, 1)
 
 [node name="Foreground" type="ColorRect" parent="UI/HungerBar"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 232.0
-offset_bottom = 32.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 37.0
 color = Color(0.101961, 1, 0, 1)
 
-[node name="IconFrame" type="ColorRect" parent="UI/HungerBar"]
+[node name="IconFrame" type="Panel" parent="UI/HungerBar"]
 layout_mode = 0
-offset_left = 232.0
+offset_left = -56.0
 offset_top = -8.0
-offset_right = 288.0
 offset_bottom = 48.0
 
 [node name="Icon" type="TextureRect" parent="UI/HungerBar"]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 280.0
-offset_bottom = 40.0
-texture = ExtResource("10_a2pyi")
+offset_left = -53.0
+offset_top = -5.0
+offset_right = -3.0
+offset_bottom = 45.0
+texture = SubResource("CompressedTexture2D_asryg")
 expand_mode = 1
 
 [node name="GoalLabel" type="Label" parent="UI"]
@@ -481,6 +663,38 @@ grow_vertical = 2
 size_flags_horizontal = 4
 label_settings = SubResource("LabelSettings_lfvrm")
 
+[node name="WoodIconFrame" type="Panel" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+script = ExtResource("14_q1hj6")
+
+[node name="Fill" type="ColorRect" parent="UI/WoodIconFrame"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 54.0
+offset_right = 106.0
+offset_bottom = 106.0
+rotation = 3.14159
+scale = Vector2(1, 1e-05)
+color = Color(0, 1, 0, 1)
+
+[node name="Icon" type="TextureRect" parent="UI/WoodIconFrame"]
+material = SubResource("ShaderMaterial_73jqb")
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 53.0
+offset_bottom = 53.0
+texture = ExtResource("14_ubyam")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="Goal" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.308, 0, 0)
 
@@ -489,18 +703,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.308, 0, 0)
 [node name="Soundtrack" type="AudioStreamPlayer2D" parent="Background sound"]
 stream = ExtResource("14_uusn6")
 autoplay = true
+bus = &"Music"
 
 [node name="Seagulls" type="AudioStreamPlayer2D" parent="Background sound"]
 stream = ExtResource("15_lmf5x")
 volume_db = 1.5
 autoplay = true
+bus = &"SFX"
 
 [node name="Sea" type="AudioStreamPlayer2D" parent="Background sound"]
 stream = ExtResource("16_fcuen")
 volume_db = 1.5
 autoplay = true
+bus = &"SFX"
 
 [node name="Chimes" type="AudioStreamPlayer2D" parent="Background sound"]
+bus = &"SFX"
 
 [connection signal="body_entered" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_entered"]
 [connection signal="body_exited" from="Scenery/Island/CraftArea/Area3D" to="Player" method="_on_craft_area_exit"]
@@ -510,3 +728,12 @@ autoplay = true
 [connection signal="craft_started" from="Player" to="." method="_on_craft_started"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="wood_collected" from="Player" to="." method="_on_wood_collected"]
+[connection signal="wood_collected" from="Player" to="UI/WoodIconFrame" method="_on_wood_collected"]
+[connection signal="wood_picked" from="Player" to="." method="_on_wood_picked"]
+
+[editable path="Scenery/Sea/Raft/player"]
+[editable path="Scenery/Sea/Raft/wood"]
+[editable path="Scenery/Sea/Raft/wood2"]
+[editable path="Scenery/Sea/Raft/wood3"]
+[editable path="Scenery/Sea/Raft/wood4"]
+[editable path="Scenery/Sea/Raft/wood5"]
